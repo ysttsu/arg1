@@ -4,7 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>404</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="404｜誰かに見つけてほしい" />
+  <meta property="og:description" content="見つからないと言われ続けたページが、あなたを見ている。" />
+  <meta property="og:url" content="https://ysttsu.github.io/arg1/404.html" />
+  <meta name="twitter:card" content="summary" />
+
+  <title>404｜誰かに見つけてほしい</title>
   <link rel="stylesheet" href="/arg1/assets/styles.css" />
 </head>
 <body>
@@ -23,8 +29,7 @@
         <a class="pill" href="/arg1/archive.html">ARCHIVE</a>
         <a class="pill" href="/arg1/terms.html">TERMS</a>
         <a class="pill" href="/arg1/contact.html">CONTACT</a>
-        <a class="pill" href="/arg1/error.html">ERROR</a>
-      </nav>
+        </nav>
     </header>
 
     <section class="content">
@@ -34,10 +39,8 @@
 
       <hr class="sep" />
       <div class="small" id="footerline"></div>
-      <div class="small" style="margin-top:8px;">
-        <a class="pill" href="#" id="reset" style="display:inline-block;">reset</a>
-      </div>
-    </section>
+<div class="small" style="margin-top:6px; opacity:.18;"><a href="#" id="reset" style="text-decoration:none;">·</a></div>
+      </section>
 
     <div class="footer">
       <div class="badge"><span class="dot"></span><span>status: <span class="mono">404</span></span></div>
@@ -51,6 +54,7 @@
 
   const now = Date.now();
   const lastPage = localStorage.getItem("last_page");
+  const fromError = (lastPage === "ERROR");
   const lastSeen = Number(localStorage.getItem("last_seen_at") || "0");
 
   const progress = Number(localStorage.getItem("progress") || "0");
@@ -61,11 +65,24 @@
   const hintEl = document.getElementById("hint");
   const footerEl = document.getElementById("footerline");
 
-  // reset
+  
+  // hidden reset: click the tiny dot or press Ctrl/⌘ + Alt + R
+  function doReset(){
+    try{
+      localStorage.clear();
+      location.reload();
+    }catch(e){}
+  }
+  document.addEventListener("keydown", (e) => {
+    const mod = (e.ctrlKey || e.metaKey) && e.altKey;
+    if (mod && (e.key === "r" || e.key === "R")) {
+      e.preventDefault();
+      doReset();
+    }
+  });
   const reset = document.getElementById("reset");
-  reset.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.clear();
+  if (reset) reset.addEventListener("click", (e)=>{ e.preventDefault(); doReset(); });
+localStorage.clear();
     location.reload();
   });
 
@@ -172,6 +189,13 @@
   let msg = "";
   let hint = "";
 
+  const errorAfterLines = [
+    "……ねえ。今、<b>ERROR</b> 見たよね？ あそこ、ほんとは見ないほうがいいページなんだけど。",
+    "ちょ、待って。ERROR踏んだ？ え、ガチで？ ……こわ。いや、ありがと（複雑）。",
+    "ERROR見たなら分かるでしょ。ここ、ただの404じゃない。私、ちゃんと“ここにいる”。"
+  ];
+
+
   if (state === "S0") {
     msg = pick(initial);
     hint = pick(hints.S0) + " ……どっかのページ、見てきて。私、材料ほしい。";
@@ -198,6 +222,11 @@
     hint = (map[expected] || `次は ${expected} っぽいの、見てきて。`) + " たぶん。";
   }
 
+  if (fromError) {
+    const pick2 = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    msg = pick2(errorAfterLines) + "<br>……で、次はちゃんと順番で来て。私、崩れたくない。";
+    hint = hint.replace(/たぶん。$/, "…お願い。");
+  }
   msgEl.innerHTML = `<p>${msg}</p>`;
   hintEl.style.display = "block";
   hintEl.innerHTML = `<div class="small">hint</div><div style="margin-top:6px;">${hint}</div>`;

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="reset" />
+  <meta property="og:description" content="進行状況を消去します。" />
+  <meta property="og:url" content="https://ysttsu.github.io/arg1/reset.html" />
+  <meta name="twitter:card" content="summary" />
+
+  <title>reset</title>
+  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <section class="content">
+      <h2 class="mono">/reset</h2>
+      <p class="small">進行状況（localStorage）を消去します。</p>
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="#" onclick="localStorage.clear();location.href='/arg1/index.html';return false;">消去して戻る</a>
+        <a class="pill" href="/arg1/index.html">キャンセル</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
