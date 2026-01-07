@@ -1,54 +1,4 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="404｜誰かに見つけてほしい" />
-  <meta property="og:description" content="見つからないと言われ続けたページが、あなたを見ている。" />
-  <meta property="og:url" content="https://ysttsu.github.io/arg1/404.html" />
-  <meta name="twitter:card" content="summary" />
 
-  <title>404｜誰かに見つけてほしい</title>
-  <link rel="stylesheet" href="/arg1/assets/styles.css" />
-</head>
-<body>
-  <div class="wrap">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>404 / Found</h1>
-          <p class="sub">見つけてほしいページ（感情過多）</p>
-        </div>
-      </div>
-      <nav class="nav" aria-label="site">
-        <a class="pill" href="/arg1/index.html">HOME</a>
-        <a class="pill" href="/arg1/about.html">ABOUT</a>
-        <a class="pill" href="/arg1/archive.html">ARCHIVE</a>
-        <a class="pill" href="/arg1/terms.html">TERMS</a>
-        <a class="pill" href="/arg1/contact.html">CONTACT</a>
-</nav>
-    </header>
-
-    <section class="content">
-      <h2>404</h2>
-      <div id="msg"></div>
-      <div id="hint" class="kv" style="display:none"></div>
-
-      <hr class="sep" />
-      <div class="small" id="footerline"></div>
-      <div class="small" style="margin-top:8px; opacity:.18;"><a href="#" id="reset" style="text-decoration:none;">·</a></div>
-    </section>
-
-    <div class="footer">
-      <div class="badge"><span class="dot"></span><span>status: <span class="mono">404</span></span></div>
-      <div>© 404 Page / Found</div>
-    </div>
-  </div>
-
-<script>
 (() => {
   const ORDER = ["ABOUT","ARCHIVE","TERMS","CONTACT","FOOTER","ERROR"];
 
@@ -65,6 +15,7 @@
   const hintEl = document.getElementById("hint");
   const footerEl = document.getElementById("footerline");
 
+  
   // hidden reset: click the tiny dot or press Ctrl/⌘ + Alt + R
   function doReset(){
     try{
@@ -81,8 +32,11 @@
   });
   const reset = document.getElementById("reset");
   if (reset) reset.addEventListener("click", (e)=>{ e.preventDefault(); doReset(); });
+localStorage.clear();
+    location.reload();
+  });
 
-// Completed scene (fixed)
+  // Completed scene (fixed)
   if (completed) {
     msgEl.innerHTML = `
       <p>……できた。</p>
@@ -229,6 +183,3 @@
 
   footerEl.textContent = `state: ${state} / progress: ${newProgress}/${ORDER.length} / mistakes: ${newMistakes}`;
 })();
-</script>
-</body>
-</html>
