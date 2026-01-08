@@ -67,8 +67,16 @@
 <script>
 (() => {
   const ORDER = ["ABOUT","ARCHIVE","TERMS","CONTACT","ERROR","PRIVACY"];
+  const ORDER_SIGNATURE = ORDER.join(">");
 
   const now = Date.now();
+  const storedSignature = localStorage.getItem("order_signature");
+  if (storedSignature !== ORDER_SIGNATURE) {
+    localStorage.setItem("order_signature", ORDER_SIGNATURE);
+    localStorage.removeItem("progress");
+    localStorage.removeItem("mistakes");
+    localStorage.removeItem("completed");
+  }
   const lastPage = localStorage.getItem("last_page");
   const fromError = (lastPage === "ERROR");
   const lastSeen = Number(localStorage.getItem("last_seen_at") || "0");
