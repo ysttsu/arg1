@@ -28,7 +28,7 @@
   <script>
   (() => {
     const visits = window.Arg1.addPageVisit("links");
-    if (visits >= 2) {
+    if (visits >= 3) {
       window.Arg1.grantFrag("frag_links");
     }
 
@@ -62,6 +62,16 @@
         show: visits >= 4 || window.Arg1.hasFrag("frag_bbs"),
         label: "404の静けさ",
         note: "行き止まり、落ち着く。"
+      },
+      {
+        show: visits >= 5,
+        label: "夜更かしノート",
+        note: "ねむれない用。"
+      },
+      {
+        show: visits >= 6,
+        label: "欠片リスト",
+        note: "埋まるまで。"
       }
     ];
 

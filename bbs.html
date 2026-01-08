@@ -26,6 +26,8 @@
     <p class="small">（無い）</p>
     <p><a href="/arg1/report.html">削除依頼フォーム</a></p>
     <p class="small">（準備中）</p>
+    <p><a href="/arg1/rules.html">掲示板ルール</a></p>
+    <p class="small">（未整備）</p>
 
     <p><a href="/arg1/index.html">TOPへ</a></p>
   </div>
@@ -34,7 +36,7 @@
   (() => {
     const visits = window.Arg1.addPageVisit("bbs");
     const hadBbs = window.Arg1.hasFrag("frag_bbs");
-    if (visits >= 2) {
+    if (visits >= 3) {
       window.Arg1.grantFrag("frag_bbs");
     }
 
@@ -50,19 +52,24 @@
         lines: ["そのうち。", "気分。"]
       },
       {
-        show: visits >= 2 || hadBbs,
+        show: visits >= 3 || hadBbs,
         name: "通りすがり",
         lines: ["言い方きついけど。", "優しい。"]
       },
       {
-        show: visits >= 2 || hadBbs,
+        show: visits >= 3 || hadBbs,
         name: "名無しさん",
         lines: ["このサイト、落ち着く。"]
       },
       {
-        show: visits >= 3,
+        show: visits >= 4,
         name: "名無しさん",
         lines: ["倉庫って、まだ？"]
+      },
+      {
+        show: visits >= 5,
+        name: "管理人",
+        lines: ["ログ整理中。", "気長に。"]
       },
       {
         show: window.Arg1.hasFrag("frag_secret"),

@@ -32,7 +32,7 @@
   <script>
   (() => {
     const visits = window.Arg1.addPageVisit("profile");
-    if (visits >= 2) {
+    if (visits >= 3) {
       window.Arg1.grantFrag("frag_profile");
     }
 
@@ -41,18 +41,18 @@
       if (el) el.textContent = text;
     };
 
-    if (window.Arg1.hasFrag("frag_diary") || visits >= 3) {
+    if (window.Arg1.hasFrag("frag_diary") || visits >= 4) {
       setText("personality", "ちょい強がり");
       setText("habit", "夜に元気");
     }
-    if (window.Arg1.hasFrag("frag_links") || visits >= 3) {
+    if (window.Arg1.hasFrag("frag_links") || visits >= 4) {
       setText("likes", "夜 / つめたい炭酸 / 巡回");
     }
-    if (window.Arg1.hasFrag("frag_bbs") || visits >= 4) {
+    if (window.Arg1.hasFrag("frag_bbs") || visits >= 5) {
       setText("dislikes", "決めつけ");
       setText("note", "見てるなら、見てて。");
     }
-    if (window.Arg1.hasFrag("frag_secret") || visits >= 5) {
+    if (window.Arg1.hasFrag("frag_secret") || visits >= 6) {
       setText("note", "最後だけは、置いとく。");
     }
   })();

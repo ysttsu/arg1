@@ -72,8 +72,8 @@
     const state = loadState();
     const totalVisits = Number(state.visits || 0) + getTotalPageVisits();
     const basePhase = Math.min(count, 5);
-    const extraPhase = basePhase === 5 ? Math.min(2, Math.floor(totalVisits / 8)) : 0;
-    const phase = Math.min(7, basePhase + extraPhase);
+    const extraPhase = basePhase === 5 ? Math.min(5, Math.floor(totalVisits / 6)) : 0;
+    const phase = Math.min(10, basePhase + extraPhase);
     if (phase <= 0) return "";
 
     const base = [
@@ -116,6 +116,21 @@
       "もう行ける。",
       "置き手紙、待ってる。"
     ];
+    const phase8 = [
+      "",
+      "夜、長い。",
+      "でも、消えない。"
+    ];
+    const phase9 = [
+      "",
+      "足音、増えた。",
+      "ここ、ちゃんとある。"
+    ];
+    const phase10 = [
+      "",
+      "最後まで、見て。",
+      "置いた場所、そこで合ってる。"
+    ];
 
     if (phase === 1) return base.join("\n");
     if (phase === 2) return base.concat(phase2).join("\n");
@@ -130,7 +145,10 @@
     ], phase5);
     if (phase === 5) return phase5Log.join("\n");
     if (phase === 6) return phase5Log.concat(phase6).join("\n");
-    return phase5Log.concat(phase6, phase7).join("\n");
+    if (phase === 7) return phase5Log.concat(phase6, phase7).join("\n");
+    if (phase === 8) return phase5Log.concat(phase6, phase7, phase8).join("\n");
+    if (phase === 9) return phase5Log.concat(phase6, phase7, phase8, phase9).join("\n");
+    return phase5Log.concat(phase6, phase7, phase8, phase9, phase10).join("\n");
   }
 
   function softRedirectToIndexIfNeeded(requiredFrags){

@@ -46,6 +46,10 @@
       const note = document.getElementById("endingNote");
       if (note) note.textContent = "※まだ、最後の一日だけ欠けてる。置いた場所は、覚えてる。";
     }
+    if (visits >= 3) {
+      const note = document.getElementById("endingNote");
+      if (note) note.textContent = "※まだ、最後の一日だけ欠けてる。夜に、ちゃんと置く。";
+    }
   })();
   </script>
 </body>

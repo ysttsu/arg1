@@ -26,6 +26,8 @@
     <p class="small">（無い）</p>
     <p><a href="/arg1/tomorrow.html">明日</a></p>
     <p class="small">（無い）</p>
+    <p><a href="/arg1/lastnight.html">昨夜</a></p>
+    <p class="small">（無い）</p>
 
     <p><a href="/arg1/index.html">TOPへ</a></p>
   </div>
@@ -34,7 +36,7 @@
   (() => {
     const visits = window.Arg1.addPageVisit("diary");
     const hadDiary = window.Arg1.hasFrag("frag_diary");
-    if (visits >= 2) {
+    if (visits >= 3) {
       window.Arg1.grantFrag("frag_diary");
     }
 
@@ -50,17 +52,22 @@
         lines: ["夜、長い。", "閉じても、残る。", "見えるほう。"]
       },
       {
-        show: visits >= 2 || hadDiary,
+        show: visits >= 3,
+        date: "2004/07/28",
+        lines: ["窓、開けた。", "風、冷たい。", "静かでいい。"]
+      },
+      {
+        show: visits >= 3 || hadDiary,
         date: "2004/08/02",
         lines: ["ページ、欠けてる。", "直すの、後で。", "今は残すほう。"]
       },
       {
-        show: visits >= 3 || window.Arg1.hasFrag("frag_links"),
+        show: visits >= 4 || window.Arg1.hasFrag("frag_links"),
         date: "2004/08/18",
         lines: ["巡回した。", "同じ夜の人、いる。", "安心する。"]
       },
       {
-        show: visits >= 4 || window.Arg1.hasFrag("frag_bbs"),
+        show: visits >= 5 || window.Arg1.hasFrag("frag_bbs"),
         date: "2004/09/05",
         lines: ["見られてる。", "嫌じゃない。", "だから残す。"]
       }
