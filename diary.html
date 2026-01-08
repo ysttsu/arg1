@@ -89,6 +89,32 @@
       });
       container.appendChild(block);
     });
+
+    if (visits >= 4) {
+      const block = document.createElement("div");
+      block.className = "block";
+      const label = document.createElement("div");
+      label.className = "small";
+      label.textContent = "メモ";
+      block.appendChild(label);
+      const lines = [
+        "y  夜の外。",
+        "o  起きてる。",
+        "r  るーと。",
+        "u  うら。",
+        ".",
+        "h  ひらく。",
+        "t  と、",
+        "m  みえる。",
+        "l  らしい。"
+      ];
+      lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        block.appendChild(p);
+      });
+      container.appendChild(block);
+    }
   })();
   </script>
 </body>

@@ -62,7 +62,7 @@
 
   function setFrags(count){
     const frags = {};
-    const ids = ["frag_profile","frag_diary","frag_links","frag_bbs","frag_secret"];
+    const ids = ["frag_profile","frag_diary","frag_links","frag_bbs","frag_secret","frag_yoru"];
     for (let i = 0; i < count && i < ids.length; i += 1) {
       frags[ids[i]] = { at: Date.now() + i };
     }
@@ -135,6 +135,24 @@
     return { ok, details: `len=${text.length}` };
   }
 
+  async function testYoruGrantsFrag(){
+    clearStorage();
+    await loadPage("/arg1/yoru.html");
+    const state = readState();
+    const ok = Boolean(state.frags && state.frags.frag_yoru);
+    return { ok, details: `frag_yoru=${ok}` };
+  }
+
+  async function test404LogAfterYoru(){
+    clearStorage();
+    setFrags(5);
+    await loadPage("/arg1/yoru.html");
+    const result = await loadPage("/arg1/404.html");
+    const logEl = result.doc.getElementById("aiLog");
+    const text = logEl ? logEl.textContent.trim() : "";
+    const ok = text !== LOGS[5];
+    return { ok, details: `len=${text.length}` };
+  }
   async function test404LogPhase1(){
     clearStorage();
     setFrags(1);
@@ -152,7 +170,9 @@
       { name: "profile grants frag", fn: testProfileGrantsFrag },
       { name: "menu grows after profile", fn: testMenuGrows },
       { name: "404 log phase 1", fn: test404LogPhase1 },
-      { name: "404 log phase 5", fn: test404LogPhase5 }
+      { name: "404 log phase 5", fn: test404LogPhase5 },
+      { name: "yoru grants frag", fn: testYoruGrantsFrag },
+      { name: "404 log changes after yoru", fn: test404LogAfterYoru }
     ];
 
     for (const c of cases) {
