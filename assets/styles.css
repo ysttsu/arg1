@@ -6,6 +6,8 @@
   --accent:#9db7ff;
   --frame:#2a2d3a;
   --paper:#171924;
+  --spark:#f6c87a;
+  --lace:#232636;
 }
 *{box-sizing:border-box}
 body{
@@ -14,6 +16,13 @@ body{
   background:var(--bg);
   color:var(--ink);
   line-height:1.6;
+}
+body:not(.is-404){
+  background:
+    radial-gradient(circle at 12px 12px, rgba(246,200,122,.08) 0 4px, transparent 4px 100%),
+    radial-gradient(circle at 36px 36px, rgba(157,183,255,.06) 0 3px, transparent 3px 100%),
+    var(--bg);
+  background-size: 48px 48px, 72px 72px, auto;
 }
 body.is-404{
   background:#000;
@@ -27,6 +36,7 @@ a:hover{text-decoration:underline}
   padding:16px 18px 28px;
   background:var(--paper);
   border:2px solid var(--frame);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.04), 0 20px 40px rgba(0,0,0,.35);
 }
 body.is-404 .wrap{
   background:transparent;
@@ -37,19 +47,61 @@ header{
   margin-bottom:14px;
   padding-bottom:8px;
 }
-h1{margin:0 0 8px; font-size:22px}
-h2{margin:18px 0 8px; font-size:16px}
+h1{
+  margin:0 0 8px;
+  font-size:22px;
+  letter-spacing:1px;
+  text-shadow: 0 0 8px rgba(157,183,255,.2);
+}
+h2{
+  margin:18px 0 8px;
+  font-size:16px;
+  display:inline-block;
+  padding:2px 8px;
+  border:1px solid var(--frame);
+  background:linear-gradient(180deg, rgba(35,38,54,.9), rgba(23,25,36,.6));
+}
 p{margin:6px 0}
 .small{font-size:12px; color:var(--muted)}
 .list{padding-left:18px; margin:6px 0}
 .list li{margin:4px 0}
-.menu{margin:8px 0 0; padding-left:18px}
-.menu li{margin:6px 0}
+.menu{margin:8px 0 0; padding-left:0; list-style:none}
+.menu li{
+  margin:6px 0;
+  padding-left:18px;
+  position:relative;
+}
+.menu li::before{
+  content:"☆";
+  position:absolute;
+  left:0;
+  color:var(--spark);
+  font-size:12px;
+  top:2px;
+}
 .note{color:var(--muted); font-size:12px; margin-left:6px}
 .block{margin:10px 0; padding:8px 10px; border:1px dotted var(--frame)}
 .hr{border:0; border-top:1px dashed var(--frame); margin:12px 0}
 .footer{margin-top:18px; font-size:12px; color:var(--muted)}
 .footer p{margin:4px 0}
+.block{
+  background:linear-gradient(180deg, rgba(35,38,54,.4), rgba(23,25,36,.1));
+  border-radius:8px;
+}
+.footer{
+  border-top:1px dashed var(--frame);
+  padding-top:10px;
+  position:relative;
+}
+.footer::before{
+  content:"* * *";
+  position:absolute;
+  top:-8px;
+  left:0;
+  color:var(--spark);
+  letter-spacing:4px;
+  font-size:10px;
+}
 .ai-log{
   margin:22px 0 0;
   font-size:12px;
