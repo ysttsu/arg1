@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://ysttsu.github.io/arg1/sitemap.xml
