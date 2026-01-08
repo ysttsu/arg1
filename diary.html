@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>日記</title>
+  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+  <script src="/arg1/assets/common.js"></script>
+  <script>
+  window.Arg1.softRedirectToIndexIfNeeded(["frag_profile"]);
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>＊日記＊</h1>
+    </header>
+
+    <p class="small">気分で書く</p>
+    <p class="small">消えるかも</p>
+
+    <div id="diaryEntries"></div>
+
+    <hr class="hr" />
+    <p><a href="/arg1/yesterday.html">昨日</a></p>
+    <p class="small">（無い）</p>
+
+    <p><a href="/arg1/index.html">TOPへ</a></p>
+  </div>
+
+  <script>
+  (() => {
+    const hadDiary = window.Arg1.hasFrag("frag_diary");
+    window.Arg1.grantFrag("frag_diary");
+
+    const entries = [
+      {
+        show: true,
+        date: "200X/??/??",
+        lines: ["今日は静か。", "静かすぎ。", "嫌いじゃない。"]
+      },
+      {
+        show: hadDiary,
+        date: "200X/??/??",
+        lines: ["ページ、欠けてる。", "直すの、後で。", "今は残すほう。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_links"),
+        date: "200X/??/??",
+        lines: ["巡回した。", "同じ夜の人、いる。", "安心する。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        date: "200X/??/??",
+        lines: ["見られてる。", "嫌じゃない。", "だから残す。"]
+      }
+    ];
+
+    const container = document.getElementById("diaryEntries");
+    entries.forEach((entry) => {
+      if (!entry.show) return;
+      const block = document.createElement("div");
+      block.className = "block";
+      const date = document.createElement("div");
+      date.className = "small";
+      date.textContent = entry.date;
+      block.appendChild(date);
+      entry.lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        block.appendChild(p);
+      });
+      container.appendChild(block);
+    });
+  })();
+  </script>
+</body>
+</html>

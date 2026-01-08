@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 Not Found</title>
+  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+</head>
+<body class="is-404">
+  <div class="wrap">
+    <h1>404 Not Found</h1>
+    <p>お探しのページは見つかりませんでした。</p>
+    <p><a href="/arg1/index.html">TOPへ戻る</a></p>
+
+    <div class="ai-log" id="aiLog"></div>
+  </div>
+
+  <script src="/arg1/assets/common.js"></script>
+  <script>
+  (() => {
+    const logText = window.Arg1.getAi404LogText();
+    const logEl = document.getElementById("aiLog");
+    if (logEl && logText) {
+      logEl.textContent = logText;
+    }
+  })();
+  </script>
+</body>
+</html>

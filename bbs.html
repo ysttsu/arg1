@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>掲示板</title>
+  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+  <script src="/arg1/assets/common.js"></script>
+  <script>
+  window.Arg1.softRedirectToIndexIfNeeded(["frag_links"]);
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>＊掲示板＊</h1>
+    </header>
+
+    <p class="small">ログだけ</p>
+    <p class="small">書き込み停止中</p>
+
+    <div id="bbsLogs"></div>
+
+    <hr class="hr" />
+    <p><a href="/arg1/log/200x.html">過去ログ</a></p>
+    <p class="small">（無い）</p>
+
+    <p><a href="/arg1/index.html">TOPへ</a></p>
+  </div>
+
+  <script>
+  (() => {
+    const hadBbs = window.Arg1.hasFrag("frag_bbs");
+    window.Arg1.grantFrag("frag_bbs");
+
+    const logs = [
+      {
+        show: true,
+        name: "名無しさん",
+        lines: ["見てるよ。", "更新まだ？"]
+      },
+      {
+        show: true,
+        name: "管理人",
+        lines: ["そのうち。", "気分。"]
+      },
+      {
+        show: hadBbs,
+        name: "通りすがり",
+        lines: ["言い方きついけど。", "優しい。"]
+      },
+      {
+        show: hadBbs,
+        name: "名無しさん",
+        lines: ["このサイト、落ち着く。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_secret"),
+        name: "名無しさん",
+        lines: ["ページ、消えてない？", "大丈夫？"]
+      }
+    ];
+
+    const container = document.getElementById("bbsLogs");
+    logs.forEach((post) => {
+      if (!post.show) return;
+      const block = document.createElement("div");
+      block.className = "block";
+      const name = document.createElement("div");
+      name.className = "small";
+      name.textContent = `NAME: ${post.name}`;
+      block.appendChild(name);
+      post.lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        block.appendChild(p);
+      });
+      container.appendChild(block);
+    });
+  })();
+  </script>
+</body>
+</html>

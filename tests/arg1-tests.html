@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ARG1 Tests</title>
+  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+  <style>
+    body{background:#f7f6f0}
+    .wrap{max-width:900px}
+    .row{display:flex; gap:12px; padding:8px 0; border-bottom:1px dashed #d8d2c4}
+    .tag{min-width:60px; font-weight:700}
+    .pass{color:#1f7a3a}
+    .fail{color:#b23c3c}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .probe{display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>ARG1 動作確認</h1>
+    </header>
+    <p class="small">ローカルの localStorage をクリアします。</p>
+    <button id="run" class="menu">Run Tests</button>
+    <div id="results"></div>
+  </div>
+
+  <script>
+  const STORAGE_KEY = "arg1_memory_v1";
+  const resultsEl = document.getElementById("results");
+  const runBtn = document.getElementById("run");
+
+  const LOGS = {
+    1: "……ない。\nここ、空。",
+    2: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？",
+    3: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。",
+    4: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。\n\nここ、好き。\n404って、静か。\n— あ\n— アイ",
+    5: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。\n\nここ、好き。\n404って、静か。\n— アイ\n\nもう、そろう。\nたぶん、最後。\n“完成したページ”に、置いた。\nありがとう、は、そこ。"
+  };
+
+  function addResult(name, ok, details){
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `
+      <div class="tag ${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</div>
+      <div>
+        <div>${name}</div>
+        <div class="small mono">${details || ""}</div>
+      </div>
+    `;
+    resultsEl.appendChild(row);
+  }
+
+  function resetResults(){
+    resultsEl.innerHTML = "";
+  }
+
+  function clearStorage(){
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  function setFrags(count){
+    const frags = {};
+    const ids = ["frag_profile","frag_diary","frag_links","frag_bbs","frag_secret"];
+    for (let i = 0; i < count && i < ids.length; i += 1) {
+      frags[ids[i]] = { at: Date.now() + i };
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ frags, visits: 0 }));
+  }
+
+  function readState(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { frags: {}, visits: 0 };
+  }
+
+  function loadPage(path){
+    return new Promise((resolve) => {
+      const iframe = document.createElement("iframe");
+      iframe.className = "probe";
+      iframe.src = new URL(path + "?t=" + Date.now(), location.href).toString();
+      iframe.onload = () => {
+        setTimeout(() => {
+          const win = iframe.contentWindow;
+          const doc = iframe.contentDocument;
+          const info = {
+            href: win ? win.location.href : "",
+            doc,
+          };
+          iframe.remove();
+          resolve(info);
+        }, 80);
+      };
+      document.body.appendChild(iframe);
+    });
+  }
+
+  async function testDiaryRedirect(){
+    clearStorage();
+    const result = await loadPage("/arg1/diary.html");
+    const ok = result.href.includes("/index.html");
+    return { ok, details: `href=${result.href}` };
+  }
+
+  async function testProfileGrantsFrag(){
+    clearStorage();
+    await loadPage("/arg1/profile.html");
+    const state = readState();
+    const ok = Boolean(state.frags && state.frags.frag_profile);
+    return { ok, details: `frag_profile=${ok}` };
+  }
+
+  async function testMenuGrows(){
+    clearStorage();
+    const first = await loadPage("/arg1/index.html");
+    const firstItems = Array.from(first.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
+    await loadPage("/arg1/profile.html");
+    const second = await loadPage("/arg1/index.html");
+    const secondItems = Array.from(second.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
+    const ok = firstItems.includes("自己紹介") && !firstItems.includes("日記") && secondItems.includes("日記");
+    return { ok, details: `first=${firstItems.join(",")} second=${secondItems.join(",")}` };
+  }
+
+  async function test404LogPhase5(){
+    clearStorage();
+    setFrags(5);
+    const result = await loadPage("/arg1/404.html");
+    const logEl = result.doc.getElementById("aiLog");
+    const text = logEl ? logEl.textContent.trim() : "";
+    const ok = text === LOGS[5];
+    return { ok, details: `len=${text.length}` };
+  }
+
+  async function test404LogPhase1(){
+    clearStorage();
+    setFrags(1);
+    const result = await loadPage("/arg1/404.html");
+    const logEl = result.doc.getElementById("aiLog");
+    const text = logEl ? logEl.textContent.trim() : "";
+    const ok = text === LOGS[1];
+    return { ok, details: `log="${text.replace(/\n/g, "\\n")}"` };
+  }
+
+  runBtn.addEventListener("click", async () => {
+    resetResults();
+    const cases = [
+      { name: "diary redirects without profile", fn: testDiaryRedirect },
+      { name: "profile grants frag", fn: testProfileGrantsFrag },
+      { name: "menu grows after profile", fn: testMenuGrows },
+      { name: "404 log phase 1", fn: test404LogPhase1 },
+      { name: "404 log phase 5", fn: test404LogPhase5 }
+    ];
+
+    for (const c of cases) {
+      try {
+        const result = await c.fn();
+        addResult(c.name, result.ok, result.details);
+      } catch (e) {
+        addResult(c.name, false, String(e));
+      }
+    }
+  });
+  </script>
+</body>
+</html>
