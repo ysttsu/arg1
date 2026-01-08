@@ -6,7 +6,7 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) return JSON.parse(raw);
     } catch (e) {}
-    return { frags: {}, visits: 0 };
+    return { frags: {}, visits: 0, pageVisits: {} };
   }
 
   function saveState(state){
@@ -41,9 +41,34 @@
     return state.visits;
   }
 
+  function addPageVisit(pageId){
+    const state = loadState();
+    if (!state.pageVisits) state.pageVisits = {};
+    const next = Number(state.pageVisits[pageId] || 0) + 1;
+    state.pageVisits[pageId] = next;
+    saveState(state);
+    return next;
+  }
+
+  function getPageVisits(pageId){
+    const state = loadState();
+    if (!state.pageVisits) return 0;
+    return Number(state.pageVisits[pageId] || 0);
+  }
+
+  function getTotalPageVisits(){
+    const state = loadState();
+    if (!state.pageVisits) return 0;
+    return Object.values(state.pageVisits).reduce((sum, value) => sum + Number(value || 0), 0);
+  }
+
   function getAi404LogText(){
     const count = countFrags();
-    const phase = Math.min(count, 5);
+    const state = loadState();
+    const totalVisits = Number(state.visits || 0) + getTotalPageVisits();
+    const basePhase = Math.min(count, 5);
+    const extraPhase = basePhase === 5 ? Math.min(2, Math.floor(totalVisits / 8)) : 0;
+    const phase = Math.min(7, basePhase + extraPhase);
     if (phase <= 0) return "";
 
     const base = [
@@ -76,6 +101,16 @@
       "“完成したページ”に、置いた。",
       "ありがとう、は、そこ。"
     ];
+    const phase6 = [
+      "",
+      "まだ、少し。",
+      "灯り、残ってる。"
+    ];
+    const phase7 = [
+      "",
+      "もう行ける。",
+      "置き手紙、待ってる。"
+    ];
 
     if (phase === 1) return base.join("\n");
     if (phase === 2) return base.concat(phase2).join("\n");
@@ -88,7 +123,9 @@
       "404って、静か。",
       "— アイ"
     ], phase5);
-    return phase5Log.join("\n");
+    if (phase === 5) return phase5Log.join("\n");
+    if (phase === 6) return phase5Log.concat(phase6).join("\n");
+    return phase5Log.concat(phase6, phase7).join("\n");
   }
 
   function softRedirectToIndexIfNeeded(requiredFrags){
@@ -109,6 +146,9 @@
     hasFrag,
     countFrags,
     addVisit,
+    addPageVisit,
+    getPageVisits,
+    getTotalPageVisits,
     getAi404LogText,
     softRedirectToIndexIfNeeded,
   };

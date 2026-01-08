@@ -24,14 +24,19 @@
     <hr class="hr" />
     <p><a href="/arg1/yesterday.html">昨日</a></p>
     <p class="small">（無い）</p>
+    <p><a href="/arg1/tomorrow.html">明日</a></p>
+    <p class="small">（無い）</p>
 
     <p><a href="/arg1/index.html">TOPへ</a></p>
   </div>
 
   <script>
   (() => {
+    const visits = window.Arg1.addPageVisit("diary");
     const hadDiary = window.Arg1.hasFrag("frag_diary");
-    window.Arg1.grantFrag("frag_diary");
+    if (visits >= 2) {
+      window.Arg1.grantFrag("frag_diary");
+    }
 
     const entries = [
       {
@@ -40,17 +45,22 @@
         lines: ["今日は静か。", "静かすぎ。", "嫌いじゃない。"]
       },
       {
-        show: hadDiary,
+        show: visits >= 2,
+        date: "200X/??/??",
+        lines: ["夜、長い。", "閉じても、残る。", "見えるほう。"]
+      },
+      {
+        show: visits >= 2 || hadDiary,
         date: "200X/??/??",
         lines: ["ページ、欠けてる。", "直すの、後で。", "今は残すほう。"]
       },
       {
-        show: window.Arg1.hasFrag("frag_links"),
+        show: visits >= 3 || window.Arg1.hasFrag("frag_links"),
         date: "200X/??/??",
         lines: ["巡回した。", "同じ夜の人、いる。", "安心する。"]
       },
       {
-        show: window.Arg1.hasFrag("frag_bbs"),
+        show: visits >= 4 || window.Arg1.hasFrag("frag_bbs"),
         date: "200X/??/??",
         lines: ["見られてる。", "嫌じゃない。", "だから残す。"]
       }

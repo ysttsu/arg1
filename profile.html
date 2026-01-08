@@ -31,25 +31,28 @@
   <script src="/arg1/assets/common.js"></script>
   <script>
   (() => {
-    window.Arg1.grantFrag("frag_profile");
+    const visits = window.Arg1.addPageVisit("profile");
+    if (visits >= 2) {
+      window.Arg1.grantFrag("frag_profile");
+    }
 
     const setText = (id, text) => {
       const el = document.getElementById(id);
       if (el) el.textContent = text;
     };
 
-    if (window.Arg1.hasFrag("frag_diary")) {
+    if (window.Arg1.hasFrag("frag_diary") || visits >= 3) {
       setText("personality", "ちょい強がり");
       setText("habit", "夜に元気");
     }
-    if (window.Arg1.hasFrag("frag_links")) {
+    if (window.Arg1.hasFrag("frag_links") || visits >= 3) {
       setText("likes", "夜 / つめたい炭酸 / 巡回");
     }
-    if (window.Arg1.hasFrag("frag_bbs")) {
+    if (window.Arg1.hasFrag("frag_bbs") || visits >= 4) {
       setText("dislikes", "決めつけ");
       setText("note", "見てるなら、見てて。");
     }
-    if (window.Arg1.hasFrag("frag_secret")) {
+    if (window.Arg1.hasFrag("frag_secret") || visits >= 5) {
       setText("note", "最後だけは、置いとく。");
     }
   })();

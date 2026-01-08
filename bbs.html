@@ -24,14 +24,19 @@
     <hr class="hr" />
     <p><a href="/arg1/log/200x.html">過去ログ</a></p>
     <p class="small">（無い）</p>
+    <p><a href="/arg1/report.html">削除依頼フォーム</a></p>
+    <p class="small">（準備中）</p>
 
     <p><a href="/arg1/index.html">TOPへ</a></p>
   </div>
 
   <script>
   (() => {
+    const visits = window.Arg1.addPageVisit("bbs");
     const hadBbs = window.Arg1.hasFrag("frag_bbs");
-    window.Arg1.grantFrag("frag_bbs");
+    if (visits >= 2) {
+      window.Arg1.grantFrag("frag_bbs");
+    }
 
     const logs = [
       {
@@ -45,14 +50,19 @@
         lines: ["そのうち。", "気分。"]
       },
       {
-        show: hadBbs,
+        show: visits >= 2 || hadBbs,
         name: "通りすがり",
         lines: ["言い方きついけど。", "優しい。"]
       },
       {
-        show: hadBbs,
+        show: visits >= 2 || hadBbs,
         name: "名無しさん",
         lines: ["このサイト、落ち着く。"]
+      },
+      {
+        show: visits >= 3,
+        name: "名無しさん",
+        lines: ["倉庫って、まだ？"]
       },
       {
         show: window.Arg1.hasFrag("frag_secret"),

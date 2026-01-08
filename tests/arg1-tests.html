@@ -105,6 +105,7 @@
   async function testProfileGrantsFrag(){
     clearStorage();
     await loadPage("/arg1/profile.html");
+    await loadPage("/arg1/profile.html");
     const state = readState();
     const ok = Boolean(state.frags && state.frags.frag_profile);
     return { ok, details: `frag_profile=${ok}` };
@@ -114,6 +115,7 @@
     clearStorage();
     const first = await loadPage("/arg1/index.html");
     const firstItems = Array.from(first.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
+    await loadPage("/arg1/profile.html");
     await loadPage("/arg1/profile.html");
     const second = await loadPage("/arg1/index.html");
     const secondItems = Array.from(second.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);

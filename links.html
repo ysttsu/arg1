@@ -27,7 +27,10 @@
 
   <script>
   (() => {
-    window.Arg1.grantFrag("frag_links");
+    const visits = window.Arg1.addPageVisit("links");
+    if (visits >= 2) {
+      window.Arg1.grantFrag("frag_links");
+    }
 
     const items = [
       {
@@ -41,17 +44,22 @@
         note: "冷たいのが正義。"
       },
       {
-        show: window.Arg1.hasFrag("frag_links"),
+        show: visits >= 2,
+        label: "曇りガラス同盟",
+        note: "ぼやけたまま。"
+      },
+      {
+        show: visits >= 2,
         label: "工事中同盟",
         note: "未完成が好き。"
       },
       {
-        show: window.Arg1.hasFrag("frag_links"),
+        show: visits >= 3 || window.Arg1.hasFrag("frag_links"),
         label: "掲示板ログ保管庫",
         note: "声が残る。"
       },
       {
-        show: window.Arg1.hasFrag("frag_bbs"),
+        show: visits >= 4 || window.Arg1.hasFrag("frag_bbs"),
         label: "404の静けさ",
         note: "行き止まり、落ち着く。"
       }

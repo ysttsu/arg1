@@ -34,8 +34,19 @@
     <p>ページを見た分だけ、形が残った。</p>
     <p>それで、十分。</p>
 
-    <p class="small">※まだ、最後の一日だけ欠けてる。</p>
+    <p class="small" id="endingNote">※まだ、最後の一日だけ欠けてる。</p>
     <p><a href="/arg1/index.html">TOPへ</a></p>
   </div>
+
+  <script src="/arg1/assets/common.js"></script>
+  <script>
+  (() => {
+    const visits = window.Arg1.addPageVisit("ending");
+    if (visits >= 2) {
+      const note = document.getElementById("endingNote");
+      if (note) note.textContent = "※まだ、最後の一日だけ欠けてる。置いた場所は、覚えてる。";
+    }
+  })();
+  </script>
 </body>
 </html>

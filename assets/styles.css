@@ -51,10 +51,11 @@ p{margin:6px 0}
 .footer{margin-top:18px; font-size:12px; color:var(--muted)}
 .footer p{margin:4px 0}
 .ai-log{
-  margin-top:22px;
+  margin:22px 0 0;
   font-size:12px;
   color:#b7b7b7;
-  white-space:pre-wrap;
+  white-space:pre-line;
+  font-family:inherit;
   user-select:none;
 }
 body.is-404 a{color:#d7e6ff}
