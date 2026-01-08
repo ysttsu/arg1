@@ -84,6 +84,7 @@
   const progress = Number(localStorage.getItem("progress") || "0");
   const mistakes = Number(localStorage.getItem("mistakes") || "0");
   const completed = localStorage.getItem("completed") === "1";
+  const prevPage = localStorage.getItem("prev_page");
 
   const msgEl = document.getElementById("msg");
   const hintEl = document.getElementById("hint");
@@ -150,8 +151,16 @@
 
   if (lastPage) {
     const expected = ORDER[progress] || null;
+    const nextExpected = ORDER[progress + 1] || null;
     if (expected && lastPage === expected) {
       newProgress = progress + 1;
+    } else if (
+      expected &&
+      nextExpected &&
+      lastPage === nextExpected &&
+      prevPage === expected
+    ) {
+      newProgress = progress + 2;
     } else if (expected && lastPage !== expected) {
       newMistakes = mistakes + 1;
     }

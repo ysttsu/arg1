@@ -86,6 +86,10 @@
   }
 
   function simulateVisit(pageId){
+    const lastPage = localStorage.getItem("last_page");
+    if (lastPage !== pageId) {
+      localStorage.setItem("prev_page", lastPage || "");
+    }
     localStorage.setItem("last_page", pageId);
     localStorage.setItem("last_seen_at", String(Date.now()));
   }
@@ -152,12 +156,30 @@
     return { ok, details:`progress=${progress} mistakes=${mistakes}` };
   }
 
+  async function testSkipAdjacentStep(){
+    clearStorage();
+    simulateVisit("ABOUT");
+    await load404();
+    simulateVisit("ARCHIVE");
+    await load404();
+    simulateVisit("TERMS");
+    await load404();
+    simulateVisit("CONTACT");
+    simulateVisit("ERROR");
+    await load404();
+    const progress = readNum("progress");
+    const mistakes = readNum("mistakes");
+    const ok = progress === 5 && mistakes === 0;
+    return { ok, details:`progress=${progress} mistakes=${mistakes}` };
+  }
+
   runBtn.addEventListener("click", async () => {
     resetResults();
     const cases = [
       { name: "Correct order completes", fn: testCorrectOrder },
       { name: "Wrong order increments mistakes", fn: testWrongOrder },
       { name: "Recovery after mistake", fn: testRecoveryAfterMistake },
+      { name: "Skip adjacent step counts", fn: testSkipAdjacentStep },
     ];
     for (const c of cases) {
       try{
