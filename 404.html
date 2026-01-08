@@ -66,7 +66,7 @@
 
 <script>
 (() => {
-  const ORDER = ["ABOUT","ARCHIVE","TERMS","CONTACT","PRIVACY","ERROR"];
+  const ORDER = ["ABOUT","ARCHIVE","TERMS","CONTACT","ERROR","PRIVACY"];
 
   const now = Date.now();
   const lastPage = localStorage.getItem("last_page");
@@ -216,7 +216,7 @@
     hint = pick(hints.S3) + " ちゃんと順番で来て。私、ぐちゃぐちゃになるの嫌。";
   } else if (state === "S4") {
     msg = "ちょっと待ってって言ったじゃん！！ その順だと、ぐちゃぐちゃになるんだけど！";
-    hint = pick(hints.S4) + " 最初は自己紹介→過去→ルール→連絡→プライバシー→例外。…ね？";
+    hint = pick(hints.S4) + " 最初は自己紹介→過去→ルール→連絡→例外→プライバシー。…ね？";
   } else {
     msg = lastPage
       ? `あ、さっき <b>${lastPage}</b> 見てたでしょ。ちょっと借りるね。`
@@ -228,8 +228,8 @@
       ARCHIVE: "次、過去。ARCHIVE行こ。",
       TERMS: "ルール無いと不安じゃん？ TERMSね。",
       CONTACT: "つながり欲しいじゃん？ CONTACT見よ。",
-      FOOTER: "締め！ FOOTER見て。",
-      ERROR: "最後に例外。ERROR。"
+      ERROR: "次は例外。ERROR。",
+      PRIVACY: "最後はプライバシー。PRIVACY見て。"
     };
     hint = (map[expected] || `次は ${expected} っぽいの、見てきて。`) + " たぶん。";
   }
