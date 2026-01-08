@@ -13,7 +13,7 @@
   <title>404 Not Found</title>
   <link rel="stylesheet" href="/arg1/assets/styles.css" />
 </head>
-<body>
+<body class="error-page">
   <div class="wrap">
     <header class="topbar">
       <div class="brand">
@@ -29,17 +29,29 @@
         <a class="pill" href="/arg1/archive.html">ARCHIVE</a>
         <a class="pill" href="/arg1/terms.html">TERMS</a>
         <a class="pill" href="/arg1/contact.html">CONTACT</a>
-</nav>
+      </nav>
     </header>
 
-    <section class="content">
-      <h2>404</h2>
-      <div id="msg"></div>
-      <div id="hint" style="display:none; margin-top:12px; padding:14px 14px; border:1px dashed rgba(255,255,255,.22); border-radius:18px; background:rgba(255,255,255,.02); color:var(--muted);"></div>
+    <section class="content error-panel">
+      <div class="error-top">
+        <div class="error-tag mono">SIGNAL LOST</div>
+        <div class="error-id mono">ERR_NOT_FOUND_404</div>
+      </div>
+      <div class="error-main">
+        <div class="error-code mono" aria-hidden="true">404</div>
+        <div class="error-summary">
+          <h2>ページが見つかりません</h2>
+          <p class="small">Requested resource is missing or moved.</p>
+        </div>
+      </div>
+      <div class="error-console" id="msg"></div>
+      <div id="hint" class="error-hint" style="display:none;"></div>
 
       <hr class="sep" />
-      <div class="small" id="footerline"></div>
-      <div class="small" style="margin-top:8px; opacity:.18;"><a href="#" id="reset" style="text-decoration:none;">·</a></div>
+      <div class="error-meta">
+        <div class="small mono" id="footerline"></div>
+        <a class="error-reset mono" href="#" id="reset">RESET</a>
+      </div>
     </section>
 
     <div class="footer">
