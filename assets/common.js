@@ -61,6 +61,11 @@
     if (!state.pageVisits) return 0;
     return Object.values(state.pageVisits).reduce((sum, value) => sum + Number(value || 0), 0);
   }
+  function resetState(){
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
+  }
 
   function getAi404LogText(){
     const count = countFrags();
@@ -149,6 +154,7 @@
     addPageVisit,
     getPageVisits,
     getTotalPageVisits,
+    resetState,
     getAi404LogText,
     softRedirectToIndexIfNeeded,
   };
