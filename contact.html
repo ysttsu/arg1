@@ -30,6 +30,7 @@
         <a class="pill" href="/arg1/archive.html">ARCHIVE</a>
         <a class="pill" href="/arg1/terms.html">TERMS</a>
         <a class="pill" href="/arg1/contact.html">CONTACT</a>
+        <a class="pill" href="/arg1/privacy.html">PRIVACY</a>
         </nav>
     </header>
 
@@ -39,15 +40,13 @@
   <p>このサイトには連絡手段が用意されていますが、現在、個別の返信は行っていません。それでも、誰かが「ここに何かを送ろうとした」という事実は記録として残ります。</p>
   <p>返事があるかどうかよりも、誰かがこの場所を意識したこと自体が重要だと考えています。つながりは、必ずしも双方向である必要はありません。</p>
 
-  <h3>送信フォーム（ダミー）</h3>
-  <p class="small">※送信は行われません。入力しても外部に送られません。</p>
-  <form onsubmit="event.preventDefault(); alert('送信は行われません（記録として残る、という設定です）');">
+  <h3>送信フォーム</h3>
+  <p class="small">※入力内容は送信されません。</p>
+  <form id="contactForm">
     <label class="small">メッセージ</label><br/>
     <textarea style="width:100%; min-height:110px; margin-top:6px; padding:10px; border-radius:14px; border:1px solid rgba(255,255,255,.18); background:rgba(0,0,0,.25); color:var(--text);"></textarea>
-    <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-      <button class="btn" type="submit">送ろうとする</button>
-      <a class="btn" href="/arg1/footer.html">末尾を見に行く</a>
-      <a class="pill" href="/arg1/_x/404entry/never-exist-01" style="opacity:.85;">未送信ログ</a>
+    <div style="margin-top:10px;">
+      <button class="btn" type="submit">送信</button>
     </div>
   </form>
 </section>
@@ -61,5 +60,17 @@
 
   <script>window.__PAGE_ID__ = "CONTACT";</script>
   <script src="/arg1/assets/shared.js"></script>
+
+<script>
+(() => {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // 送信処理の不具合（という設定）で例外ページへ遷移
+    location.href = "/arg1/error.html";
+  });
+})();
+</script>
 </body>
 </html>
