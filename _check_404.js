@@ -32,9 +32,6 @@
   });
   const reset = document.getElementById("reset");
   if (reset) reset.addEventListener("click", (e)=>{ e.preventDefault(); doReset(); });
-localStorage.clear();
-    location.reload();
-  });
 
   // Completed scene (fixed)
   if (completed) {
