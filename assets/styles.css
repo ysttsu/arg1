@@ -1,11 +1,11 @@
 :root{
   color-scheme: light;
-  --bg:#f4f2ea;
-  --ink:#2b2b2b;
-  --muted:#6b6b6b;
-  --accent:#1e5aa8;
-  --frame:#d8d2c4;
-  --paper:#fffdf7;
+  --bg:#111218;
+  --ink:#e8e5dd;
+  --muted:#a6a19a;
+  --accent:#9db7ff;
+  --frame:#2a2d3a;
+  --paper:#171924;
 }
 *{box-sizing:border-box}
 body{
