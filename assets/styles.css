@@ -134,3 +134,9 @@ textarea{font-family:inherit}
   .card{grid-column: span 12}
   .hero h2{font-size:20px}
 }
+
+
+/* Ensure grids respect content width */
+.content .grid {
+  max-width: 100%;
+}
