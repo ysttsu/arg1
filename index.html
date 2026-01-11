@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>＊個人サイト＊（復旧ログ）</title>
-  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
   <div class="wrap">
@@ -22,20 +22,20 @@
 
     <h2>★おまけ★</h2>
     <ul class="menu">
-      <li><a href="/arg1/kiriban.html">キリ番報告はこちら</a><span class="note">踏み逃げ禁止（嘘）</span></li>
-      <li><a href="/arg1/sozai.html">素材置き場</a><span class="note">そのうち</span></li>
-      <li><a href="/arg1/renraku.html">相互リンク募集中</a><span class="note">気が向いたら</span></li>
-      <li><a href="/arg1/old.html">旧ログ</a><span class="note">404多め</span></li>
+      <li><a href="./kiriban.html">キリ番報告はこちら</a><span class="note">踏み逃げ禁止（嘘）</span></li>
+      <li><a href="./sozai.html">素材置き場</a><span class="note">そのうち</span></li>
+      <li><a href="./renraku.html">相互リンク募集中</a><span class="note">気が向いたら</span></li>
+      <li><a href="./old.html">旧ログ</a><span class="note">404多め</span></li>
     </ul>
 
     <div class="footer">
       <p>since 200X / 管理人：？？？</p>
       <p>最終更新：不明</p>
-      <p><a href="/arg1/reset.html">最初から</a></p>
+      <p><a href="./reset.html">最初から</a></p>
     </div>
   </div>
 
-  <script src="/arg1/assets/common.js"></script>
+  <script src="./assets/common.js"></script>
   <script>
   (() => {
     const visits = window.Arg1.addVisit();
@@ -43,12 +43,12 @@
     if (visitEl) visitEl.textContent = String(visits);
 
     const items = [
-      { label: "自己紹介", href: "/arg1/profile.html", note: "（とりあえず）" },
-      { label: "日記", href: "/arg1/diary.html", note: "（たまに更新）", req: ["frag_profile"] },
-      { label: "リンク", href: "/arg1/links.html", note: "（巡回用）", req: ["frag_diary"] },
-      { label: "掲示板", href: "/arg1/bbs.html", note: "（ログ）", req: ["frag_links"] },
-      { label: "倉庫", href: "/arg1/secret.html", note: "（古いメモ）", req: ["frag_bbs"] },
-      { label: "完成ページ", href: "/arg1/ending.html", note: "（たぶん）", req: ["frag_secret", "frag_yoru"] }
+      { label: "自己紹介", href: "./profile.html", note: "（とりあえず）" },
+      { label: "日記", href: "./diary.html", note: "（たまに更新）", req: ["frag_profile"] },
+      { label: "リンク", href: "./links.html", note: "（巡回用）", req: ["frag_diary"] },
+      { label: "掲示板", href: "./bbs.html", note: "（ログ）", req: ["frag_links"] },
+      { label: "倉庫", href: "./secret.html", note: "（古いメモ）", req: ["frag_bbs"] },
+      { label: "完成ページ", href: "./ending.html", note: "（たぶん）", req: ["frag_secret", "frag_yoru"] }
     ];
 
     const list = document.getElementById("menuList");

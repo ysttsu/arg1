@@ -157,7 +157,7 @@
     if (!requiredFrags || requiredFrags.length === 0) return true;
     for (const id of requiredFrags) {
       if (!hasFrag(id)) {
-        location.replace("/arg1/index.html");
+        location.replace("./index.html");
         return false;
       }
     }

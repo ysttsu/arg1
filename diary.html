@@ -5,8 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>日記</title>
-  <link rel="stylesheet" href="/arg1/assets/styles.css" />
-  <script src="/arg1/assets/common.js"></script>
+  <link rel="stylesheet" href="./assets/styles.css" />
+  <script src="./assets/common.js"></script>
   <script>
     window.Arg1.softRedirectToIndexIfNeeded(["frag_profile"]);
   </script>
@@ -24,14 +24,14 @@
     <div id="diaryEntries"></div>
 
     <hr class="hr" />
-    <p><a href="/arg1/yesterday.html">昨日</a></p>
+    <p><a href="./yesterday.html">昨日</a></p>
     <p class="small">（無い）</p>
-    <p><a href="/arg1/tomorrow.html">明日</a></p>
+    <p><a href="./tomorrow.html">明日</a></p>
     <p class="small">（無い）</p>
-    <p><a href="/arg1/lastnight.html">昨夜</a></p>
+    <p><a href="./lastnight.html">昨夜</a></p>
     <p class="small">（無い）</p>
 
-    <p><a href="/arg1/index.html">TOPへ</a></p>
+    <p><a href="./index.html">TOPへ</a></p>
   </div>
 
   <script>
@@ -81,7 +81,7 @@
         const block = document.createElement("div");
         block.className = "block";
         const date = document.createElement("div");
-        date.className = "small";
+        date.className = "zprof-heading";
         date.textContent = entry.date;
         block.appendChild(date);
         entry.lines.forEach((line) => {
@@ -96,7 +96,7 @@
         const block = document.createElement("div");
         block.className = "block";
         const label = document.createElement("div");
-        label.className = "small";
+        label.className = "zprof-heading";
         label.textContent = "メモ";
         block.appendChild(label);
         const lines = [

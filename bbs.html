@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>掲示板</title>
-  <link rel="stylesheet" href="/arg1/assets/styles.css" />
-  <script src="/arg1/assets/common.js"></script>
+  <link rel="stylesheet" href="./assets/styles.css" />
+  <script src="./assets/common.js"></script>
   <script>
   window.Arg1.softRedirectToIndexIfNeeded(["frag_links"]);
   </script>
@@ -22,14 +22,14 @@
     <div id="bbsLogs"></div>
 
     <hr class="hr" />
-    <p><a href="/arg1/log/200x.html">過去ログ</a></p>
+    <p><a href="./log/200x.html">過去ログ</a></p>
     <p class="small">（無い）</p>
-    <p><a href="/arg1/report.html">削除依頼フォーム</a></p>
+    <p><a href="./report.html">削除依頼フォーム</a></p>
     <p class="small">（準備中）</p>
-    <p><a href="/arg1/rules.html">掲示板ルール</a></p>
+    <p><a href="./rules.html">掲示板ルール</a></p>
     <p class="small">（未整備）</p>
 
-    <p><a href="/arg1/index.html">TOPへ</a></p>
+    <p><a href="./index.html">TOPへ</a></p>
   </div>
 
   <script>
@@ -84,7 +84,7 @@
       const block = document.createElement("div");
       block.className = "block";
       const name = document.createElement("div");
-      name.className = "small";
+      name.className = "zprof-heading";
       name.textContent = `NAME: ${post.name}`;
       block.appendChild(name);
       post.lines.forEach((line) => {
