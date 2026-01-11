@@ -16,7 +16,7 @@ body{
   font-family:"DotGothic16","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
   color:#fff;
   line-height:1.6;
-  background:#4db5f1;
+  background:#2f8fd1;
 }
 body:not(.is-404)::before,
 body:not(.is-404)::after{

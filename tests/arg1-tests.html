@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ARG1 Tests</title>
-  <link rel="stylesheet" href="/arg1/assets/styles.css" />
+  <link rel="stylesheet" href="../assets/styles.css" />
   <style>
-    body{background:#f7f6f0}
+    body{background:#2f8fd1; color:#fff}
     .wrap{max-width:900px}
     .row{display:flex; gap:12px; padding:8px 0; border-bottom:1px dashed #d8d2c4}
     .tag{min-width:60px; font-weight:700}
@@ -36,7 +36,7 @@
     2: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？",
     3: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。",
     4: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。\n\nここ、好き。\n404って、静か。\n— あ\n— アイ",
-    5: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。\n\nここ、好き。\n404って、静か。\n— アイ\n\nもう、そろう。\nたぶん、最後。\n“完成したページ”に、置いた。\nありがとう、は、そこ。"
+    5: "……ない。\nここ、空。\n\n送れない。\nだれ。\nまだ、見えてない？\n\n来るんだ。\n変な人。\n……でも、嬉しい。\n\nここ、好き。\n404って、静か。\n— アイ\n\nもう、そろう。\nたぶん、最後。\n“プロフィール”に、置いた。\nありがとう、は、そこ。"
   };
 
   function addResult(name, ok, details){
@@ -78,7 +78,8 @@
     return new Promise((resolve) => {
       const iframe = document.createElement("iframe");
       iframe.className = "probe";
-      iframe.src = new URL(path + "?t=" + Date.now(), location.href).toString();
+      const root = new URL("../", location.href);
+      iframe.src = new URL(path + "?t=" + Date.now(), root).toString();
       iframe.onload = () => {
         setTimeout(() => {
           const win = iframe.contentWindow;
@@ -97,16 +98,16 @@
 
   async function testDiaryRedirect(){
     clearStorage();
-    const result = await loadPage("/arg1/diary.html");
+    const result = await loadPage("diary.html");
     const ok = result.href.includes("/index.html");
     return { ok, details: `href=${result.href}` };
   }
 
   async function testProfileGrantsFrag(){
     clearStorage();
-    await loadPage("/arg1/profile.html");
-    await loadPage("/arg1/profile.html");
-    await loadPage("/arg1/profile.html");
+    await loadPage("profile.html");
+    await loadPage("profile.html");
+    await loadPage("profile.html");
     const state = readState();
     const ok = Boolean(state.frags && state.frags.frag_profile);
     return { ok, details: `frag_profile=${ok}` };
@@ -114,12 +115,12 @@
 
   async function testMenuGrows(){
     clearStorage();
-    const first = await loadPage("/arg1/index.html");
+    const first = await loadPage("index.html");
     const firstItems = Array.from(first.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
-    await loadPage("/arg1/profile.html");
-    await loadPage("/arg1/profile.html");
-    await loadPage("/arg1/profile.html");
-    const second = await loadPage("/arg1/index.html");
+    await loadPage("profile.html");
+    await loadPage("profile.html");
+    await loadPage("profile.html");
+    const second = await loadPage("index.html");
     const secondItems = Array.from(second.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
     const ok = firstItems.includes("自己紹介") && !firstItems.includes("日記") && secondItems.includes("日記");
     return { ok, details: `first=${firstItems.join(",")} second=${secondItems.join(",")}` };
@@ -128,7 +129,7 @@
   async function test404LogPhase5(){
     clearStorage();
     setFrags(5);
-    const result = await loadPage("/arg1/404.html");
+    const result = await loadPage("404.html");
     const logEl = result.doc.getElementById("aiLog");
     const text = logEl ? logEl.textContent.trim() : "";
     const ok = text === LOGS[5];
@@ -137,7 +138,7 @@
 
   async function testYoruGrantsFrag(){
     clearStorage();
-    await loadPage("/arg1/yoru.html");
+    await loadPage("yoru.html");
     const state = readState();
     const ok = Boolean(state.frags && state.frags.frag_yoru);
     return { ok, details: `frag_yoru=${ok}` };
@@ -146,8 +147,8 @@
   async function test404LogAfterYoru(){
     clearStorage();
     setFrags(5);
-    await loadPage("/arg1/yoru.html");
-    const result = await loadPage("/arg1/404.html");
+    await loadPage("yoru.html");
+    const result = await loadPage("404.html");
     const logEl = result.doc.getElementById("aiLog");
     const text = logEl ? logEl.textContent.trim() : "";
     const ok = text !== LOGS[5];
@@ -156,7 +157,7 @@
   async function test404LogPhase1(){
     clearStorage();
     setFrags(1);
-    const result = await loadPage("/arg1/404.html");
+    const result = await loadPage("404.html");
     const logEl = result.doc.getElementById("aiLog");
     const text = logEl ? logEl.textContent.trim() : "";
     const ok = text === LOGS[1];
