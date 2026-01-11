@@ -48,18 +48,19 @@
       if (el) el.textContent = text;
     };
 
-    if (window.Arg1.hasFrag("frag_diary") || visits >= 4) {
+    // フラグベース + 高い訪問回数フォールバック
+    if (window.Arg1.hasFrag("frag_diary") || visits >= 8) {
       setText("personality", "ちょい強がり");
       setText("habit", "夜に元気");
     }
-    if (window.Arg1.hasFrag("frag_links") || visits >= 5) {
+    if (window.Arg1.hasFrag("frag_links") || visits >= 12) {
       setText("likes", "夜 / つめたい炭酸 / 巡回");
     }
-    if (window.Arg1.hasFrag("frag_bbs") || visits >= 6) {
+    if (window.Arg1.hasFrag("frag_bbs") || visits >= 16) {
       setText("dislikes", "決めつけ");
       setText("note", "見てるなら、最後まで見てて。");
     }
-    if (window.Arg1.hasFrag("frag_secret") || visits >= 7) {
+    if (window.Arg1.hasFrag("frag_secret") || visits >= 20) {
       setText("note", "最後まで、置いとく。");
     }
   })();
