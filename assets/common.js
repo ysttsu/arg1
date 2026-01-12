@@ -1,5 +1,12 @@
 (() => {
   const STORAGE_KEY = "arg1_memory_v1";
+  const MAIN_FRAGS = new Set([
+    "frag_profile",
+    "frag_diary",
+    "frag_links",
+    "frag_bbs",
+    "frag_secret"
+  ]);
 
   function loadState(){
     try {
@@ -31,7 +38,8 @@
 
   function countFrags(){
     const state = loadState();
-    return state.frags ? Object.keys(state.frags).length : 0;
+    if (!state.frags) return 0;
+    return Object.keys(state.frags).filter((id) => MAIN_FRAGS.has(id)).length;
   }
 
   function addVisit(){
