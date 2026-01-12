@@ -94,9 +94,12 @@
     const state = loadState();
     const totalVisits = Number(state.visits || 0) + getTotalPageVisits();
     const basePhase = Math.min(count, 5);
-    let extraPhase = basePhase === 5 ? Math.floor(totalVisits / 6) : 0;
-    if (hasFrag("frag_yoru")) extraPhase += 1;
-    extraPhase = Math.min(5, extraPhase);
+    let extraPhase = 0;
+    if (basePhase === 5) {
+      extraPhase = Math.floor(totalVisits / 6);
+      if (hasFrag("frag_yoru")) extraPhase += 1;
+      extraPhase = Math.min(5, extraPhase);
+    }
     const phase = Math.min(10, basePhase + extraPhase);
     if (phase <= 0) return "";
 
