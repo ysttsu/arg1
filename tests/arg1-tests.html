@@ -65,7 +65,7 @@
 
   function setFrags(count){
     const frags = {};
-    const ids = ["frag_profile","frag_diary","frag_links","frag_bbs","frag_secret","frag_yoru"];
+    const ids = ["frag_profile","frag_diary","frag_links","frag_bbs","frag_archive","frag_yoru"];
     for (let i = 0; i < count && i < ids.length; i += 1) {
       frags[ids[i]] = { at: Date.now() + i };
     }
@@ -200,6 +200,17 @@
     return { ok: unchanged, details: `unchanged=${unchanged}` };
   }
 
+  async function testProfileNameAfterSignature(){
+    clearStorage();
+    setFrags(4);
+    await loadPage("404.html");
+    const result = await loadPage("profile.html");
+    const nameEl = result.doc.getElementById("name");
+    const name = nameEl ? nameEl.textContent.trim() : "";
+    const ok = name === "アイ";
+    return { ok, details: `name=${name}` };
+  }
+
   runBtn.addEventListener("click", async () => {
     resetResults();
     const cases = [
@@ -211,7 +222,8 @@
       { name: "yoru grants frag", fn: testYoruGrantsFrag },
       { name: "404 log changes after yoru", fn: test404LogAfterYoru },
       { name: "404 log empty with only yoru", fn: test404LogYoruOnlyIsEmpty },
-      { name: "profile stays blank without frags", fn: testProfileNoFallbackFill }
+      { name: "profile stays blank without frags", fn: testProfileNoFallbackFill },
+      { name: "profile name fills after signature", fn: testProfileNameAfterSignature }
     ];
 
     for (const c of cases) {

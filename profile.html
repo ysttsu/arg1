@@ -48,6 +48,10 @@
       if (el) el.textContent = text;
     };
 
+    if (window.Arg1.hasSeenSignature()) {
+      setText("name", "アイ");
+    }
+
     // フラグベース
     if (window.Arg1.hasFrag("frag_diary")) {
       setText("personality", "ちょい強がり");
@@ -60,7 +64,7 @@
       setText("dislikes", "決めつけ");
       setText("note", "見てるなら、最後まで見てて。");
     }
-    if (window.Arg1.hasFrag("frag_secret")) {
+    if (window.Arg1.hasFrag("frag_archive")) {
       setText("note", "最後まで、置いとく。");
     }
   })();

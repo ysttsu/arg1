@@ -21,7 +21,7 @@ This is a static ARG (Alternate Reality Game) website that mimics a nostalgic Ja
 ├── diary.html          # Diary entries (expand with visits)
 ├── links.html          # Links page (items increase)
 ├── bbs.html            # BBS logs (posts appear)
-├── secret.html         # Storage/memo page
+├── archive.html         # Archive/memo page
 ├── yoru.html           # Night note (hidden page)
 ├── 404.html            # 404 page (only place "Ai" speaks)
 ├── reset.html          # Reset progress utility
@@ -42,7 +42,7 @@ This is a static ARG (Alternate Reality Game) website that mimics a nostalgic Ja
 The entire progression system is built on `window.Arg1` global object:
 
 **Fragment System**:
-- 5 main fragments: `frag_profile`, `frag_diary`, `frag_links`, `frag_bbs`, `frag_secret`
+- 5 main fragments: `frag_profile`, `frag_diary`, `frag_links`, `frag_bbs`, `frag_archive`
 - Additional fragment: `frag_yoru` (bonus page)
 - Fragments unlock as users visit pages multiple times
 
@@ -106,7 +106,7 @@ Each page has:
 - `diary.html` → Requires `frag_profile` → Grants `frag_diary` on 3rd visit
 - `links.html` → Requires `frag_diary` → Grants `frag_links` on 3rd visit
 - `bbs.html` → Requires `frag_links` → Grants `frag_bbs` on 3rd visit
-- `secret.html` → Requires `frag_bbs` → Grants `frag_secret` on 3rd visit
+- `archive.html` → Requires `frag_bbs` → Grants `frag_archive` on 3rd visit
 - `yoru.html` → No requirement → Grants `frag_yoru` on first visit (hidden page)
 
 ### Natural 404 Hooks

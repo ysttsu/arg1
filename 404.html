@@ -26,6 +26,9 @@
     if (logEl && logText) {
       logEl.textContent = logText;
     }
+    if (logText && logText.includes("— アイ")) {
+      window.Arg1.markSignatureSeen();
+    }
   })();
   </script>
 </body>

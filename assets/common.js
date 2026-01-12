@@ -5,7 +5,7 @@
     "frag_diary",
     "frag_links",
     "frag_bbs",
-    "frag_secret"
+    "frag_archive"
   ]);
 
   function loadState(){
@@ -13,7 +13,7 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) return JSON.parse(raw);
     } catch (e) {}
-    return { frags: {}, visits: 0, pageVisits: {} };
+    return { frags: {}, visits: 0, pageVisits: {}, flags: {} };
   }
 
   function saveState(state){
@@ -73,6 +73,20 @@
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (e) {}
+  }
+
+  function markSignatureSeen(){
+    const state = loadState();
+    if (!state.flags) state.flags = {};
+    if (!state.flags.seenSignature) {
+      state.flags.seenSignature = true;
+      saveState(state);
+    }
+  }
+
+  function hasSeenSignature(){
+    const state = loadState();
+    return Boolean(state.flags && state.flags.seenSignature);
   }
 
   function getAi404LogText(){
@@ -138,7 +152,7 @@
       "もう行ける。",
       "全部、そろった。",
       "置き手紙、読んでくれた？",
-      "secret、見つけた？"
+      "アーカイブ、見つけた？"
     ];
     const phase8 = [
       "",
@@ -205,6 +219,8 @@
     getPageVisits,
     getTotalPageVisits,
     resetState,
+    markSignatureSeen,
+    hasSeenSignature,
     getAi404LogText,
     softRedirectToIndexIfNeeded,
   };
