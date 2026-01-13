@@ -39,10 +39,10 @@
   <script>
   (() => {
     const visits = window.Arg1.addPageVisit("archive");
-    if (visits >= 3) {
+    if (visits >= 1) {
       window.Arg1.grantFrag("frag_archive");
     }
-    if (visits >= 2) {
+    if (window.Arg1.getUniquePageVisitCount() >= 4) {
       const block = document.querySelector(".block");
       if (!block) return;
       const extra = [
@@ -56,7 +56,7 @@
         block.appendChild(p);
       });
     }
-    if (visits >= 4) {
+    if (window.Arg1.getUniquePageVisitCount() >= 6) {
       const block = document.querySelector(".block");
       if (!block) return;
       const more = [

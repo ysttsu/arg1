@@ -41,7 +41,7 @@
     (() => {
       const visits = window.Arg1.addPageVisit("diary");
       const hadDiary = window.Arg1.hasFrag("frag_diary");
-      if (visits >= 3) {
+      if (visits >= 1) {
         window.Arg1.grantFrag("frag_diary");
       }
 
@@ -52,27 +52,27 @@
           lines: ["今日は静か。", "静かすぎ。", "嫌いじゃない。"]
         },
         {
-          show: visits >= 2,
+          show: visits >= 2 || window.Arg1.hasFrag("frag_links"),
           date: "2004/07/21",
           lines: ["夜、長い。", "閉じても、残る。", "見えるほう。"]
         },
         {
-          show: visits >= 3,
+          show: window.Arg1.hasFrag("frag_links"),
           date: "2004/07/28",
           lines: ["窓、開けた。", "風、冷たい。", "静かでいい。"]
         },
         {
-          show: visits >= 3 || hadDiary,
+          show: hadDiary,
           date: "2004/08/02",
           lines: ["ページ、欠けてる。", "直すの、後で。", "今は残すほう。"]
         },
         {
-          show: visits >= 4 || window.Arg1.hasFrag("frag_links"),
+          show: window.Arg1.hasFrag("frag_links"),
           date: "2004/08/18",
           lines: ["巡回した。", "同じ夜の人、いる。", "安心する。"]
         },
         {
-          show: visits >= 5 || window.Arg1.hasFrag("frag_bbs"),
+          show: window.Arg1.hasFrag("frag_bbs"),
           date: "2004/09/05",
           lines: ["見られてる。", "嫌じゃない。", "だから残す。"]
         }
@@ -95,7 +95,7 @@
         container.appendChild(block);
       });
 
-      if (visits >= 4) {
+      if (window.Arg1.hasFrag("frag_links")) {
         const block = document.createElement("div");
         block.className = "block";
         const label = document.createElement("div");

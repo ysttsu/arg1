@@ -69,6 +69,11 @@
     if (!state.pageVisits) return 0;
     return Object.values(state.pageVisits).reduce((sum, value) => sum + Number(value || 0), 0);
   }
+  function getUniquePageVisitCount(){
+    const state = loadState();
+    if (!state.pageVisits) return 0;
+    return Object.keys(state.pageVisits).length;
+  }
   function resetState(){
     try {
       localStorage.removeItem(STORAGE_KEY);
@@ -93,10 +98,12 @@
     const count = countFrags();
     const state = loadState();
     const totalVisits = Number(state.visits || 0) + getTotalPageVisits();
+    const uniqueVisits = getUniquePageVisitCount();
     const basePhase = Math.min(count, 5);
     let extraPhase = 0;
     if (basePhase === 5) {
       extraPhase = Math.floor(totalVisits / 6);
+      extraPhase += Math.floor(uniqueVisits / 2);
       if (hasFrag("frag_yoru")) extraPhase += 1;
       extraPhase = Math.min(5, extraPhase);
     }
@@ -221,6 +228,7 @@
     addPageVisit,
     getPageVisits,
     getTotalPageVisits,
+    getUniquePageVisitCount,
     resetState,
     markSignatureSeen,
     hasSeenSignature,

@@ -39,7 +39,7 @@
   (() => {
     const visits = window.Arg1.addPageVisit("bbs");
     const hadBbs = window.Arg1.hasFrag("frag_bbs");
-    if (visits >= 3) {
+    if (visits >= 1) {
       window.Arg1.grantFrag("frag_bbs");
     }
 
@@ -65,12 +65,12 @@
         lines: ["このサイト、落ち着く。"]
       },
       {
-        show: visits >= 4,
+        show: window.Arg1.hasFrag("frag_archive"),
         name: "名無しさん",
         lines: ["アーカイブって、まだ？"]
       },
       {
-        show: visits >= 5,
+        show: window.Arg1.hasFrag("frag_archive"),
         name: "管理人",
         lines: ["ログ整理中。", "気長に。"]
       },

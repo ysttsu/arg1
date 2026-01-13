@@ -69,7 +69,7 @@
     for (let i = 0; i < count && i < ids.length; i += 1) {
       frags[ids[i]] = { at: Date.now() + i };
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ frags, visits: 0 }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ frags, visits: 0, pageVisits: {} }));
   }
 
   function setFragsByIds(ids){
@@ -77,12 +77,12 @@
     ids.forEach((id, i) => {
       frags[id] = { at: Date.now() + i };
     });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ frags, visits: 0 }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ frags, visits: 0, pageVisits: {} }));
   }
 
   function readState(){
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : { frags: {}, visits: 0 };
+    return raw ? JSON.parse(raw) : { frags: {}, visits: 0, pageVisits: {} };
   }
 
   function loadPage(path){
@@ -117,8 +117,6 @@
   async function testProfileGrantsFrag(){
     clearStorage();
     await loadPage("profile.html");
-    await loadPage("profile.html");
-    await loadPage("profile.html");
     const state = readState();
     const ok = Boolean(state.frags && state.frags.frag_profile);
     return { ok, details: `frag_profile=${ok}` };
@@ -128,8 +126,6 @@
     clearStorage();
     const first = await loadPage("index.html");
     const firstItems = Array.from(first.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
-    await loadPage("profile.html");
-    await loadPage("profile.html");
     await loadPage("profile.html");
     const second = await loadPage("index.html");
     const secondItems = Array.from(second.doc.querySelectorAll("#menuList li a")).map((el) => el.textContent);
@@ -187,9 +183,6 @@
 
   async function testProfileNoFallbackFill(){
     clearStorage();
-    for (let i = 0; i < 8; i += 1) {
-      await loadPage("profile.html");
-    }
     const result = await loadPage("profile.html");
     const doc = result.doc;
     const fields = ["personality", "habit", "likes", "dislikes", "note"];
