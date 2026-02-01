@@ -280,3 +280,19 @@ body.is-404 a{color:#d7e6ff}
   opacity: 1;
   cursor: default;
 }
+
+/* === ギミック：全項目Hover === */
+.link-item.hovered .note::after {
+  content: " ……読んでる。";
+  opacity: 0.6;
+}
+.hover-complete-msg {
+  opacity: 0;
+  transition: opacity 0.5s;
+  font-size: 0.9em;
+  color: rgba(255,255,255,0.6);
+  margin-top: 1em;
+}
+.hover-complete-msg.show {
+  opacity: 1;
+}

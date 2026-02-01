@@ -31,9 +31,6 @@
   <script>
   (() => {
     const visits = window.Arg1.addPageVisit("links");
-    if (visits >= 1) {
-      window.Arg1.grantFrag("frag_links");
-    }
 
     const items = [
       {
@@ -79,9 +76,30 @@
     ];
 
     const list = document.getElementById("linkList");
-    items.forEach((item) => {
+    const hoveredSet = new Set();
+    let totalItems = 0;
+
+    items.forEach((item, index) => {
       if (!item.show) return;
+      totalItems++;
       const li = document.createElement("li");
+      li.className = "link-item";
+      li.dataset.index = index;
+
+      // ホバー検知（フラグ未取得時のみ）
+      if (!window.Arg1.hasFrag("frag_links")) {
+        li.addEventListener("mouseenter", () => {
+          hoveredSet.add(index);
+          li.classList.add("hovered");
+
+          // 全項目ホバー完了チェック
+          if (hoveredSet.size === totalItems) {
+            window.Arg1.grantFrag("frag_links");
+            showCompleteMessage();
+          }
+        });
+      }
+
       const link = document.createElement("a");
       link.href = "#";
       link.textContent = item.label;
@@ -94,6 +112,15 @@
       }
       list.appendChild(li);
     });
+
+    function showCompleteMessage() {
+      const msg = document.createElement("p");
+      msg.className = "hover-complete-msg";
+      msg.textContent = "……全部、見てくれた";
+      list.after(msg);
+      setTimeout(() => msg.classList.add("show"), 100);
+      setTimeout(() => msg.classList.remove("show"), 2000);
+    }
   })();
   </script>
 </body>
