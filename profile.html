@@ -23,12 +23,19 @@
 
     <div class="zprof-section">
       <div class="zprof-heading">プロフィール</div>
-      <div class="zprof-content"><span class="zprof-label">なまえ</span><span id="name">――――</span>
+      <div class="zprof-content"><span class="zprof-label">なまえ</span><span id="name">――――</span><button id="btnRemember" class="remember-btn" style="display:none;">覚えてる？</button>
 <span class="zprof-label">性格</span><span id="personality">――――</span>
 <span class="zprof-label">すき</span><span id="likes">――――</span>
 <span class="zprof-label">きらい</span><span id="dislikes">――――</span>
 <span class="zprof-label">くせ</span><span id="habit">――――</span>
 <span class="zprof-label">ひとこと</span><span id="note">――――</span></div>
+    </div>
+
+    <div id="questionBlock" class="question-block" style="display:none;">
+      <p>ここまで。</p>
+      <p>続き？</p>
+      <button id="btnYes">うん</button>
+      <button id="btnSilent">……</button>
     </div>
 
     <p class="small">※追記するかも</p>
@@ -81,6 +88,41 @@
       observer.observe(marker);
     } else if (marker) {
       marker.classList.add("revealed");
+    }
+
+    // 選択ブロック（frag_bbs取得済み && 未回答）
+    if (window.Arg1.hasFrag("frag_bbs") && !window.Arg1.hasAnsweredContinue()) {
+      const qBlock = document.getElementById("questionBlock");
+      if (qBlock) {
+        qBlock.style.display = "block";
+        document.getElementById("btnYes").onclick = () => {
+          window.Arg1.markAnsweredContinue();
+          qBlock.style.display = "none";
+        };
+        document.getElementById("btnSilent").onclick = () => {
+          window.Arg1.markAnsweredContinue();
+          qBlock.style.display = "none";
+        };
+      }
+    }
+
+    // 最終確認ボタン（完成状態 && 署名見た && 未実行）
+    const isComplete = window.Arg1.hasFrag("frag_archive") && window.Arg1.hasFrag("frag_yoru");
+    if (isComplete && window.Arg1.hasSeenSignature() && !window.Arg1.hasRememberedAi()) {
+      const btnRemember = document.getElementById("btnRemember");
+      if (btnRemember) {
+        btnRemember.style.display = "inline";
+        btnRemember.onclick = () => {
+          setText("name", "アイ（　　　）");
+          window.Arg1.markRememberedAi();
+          btnRemember.style.display = "none";
+        };
+      }
+    }
+
+    // 既に実行済みなら「アイ（　　　）」表示
+    if (window.Arg1.hasRememberedAi()) {
+      setText("name", "アイ（　　　）");
     }
   })();
   </script>

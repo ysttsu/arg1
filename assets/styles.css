@@ -232,3 +232,37 @@ body.is-404 a{color:#d7e6ff}
 .scroll-marker.revealed {
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* === ギミック：選択ブロック === */
+.question-block {
+  margin: 1.5em 0;
+  padding: 1em;
+  border: 1px dashed rgba(255,255,255,0.2);
+}
+.question-block button {
+  margin: 0.5em 0.5em 0 0;
+  padding: 0.3em 1em;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+}
+.question-block button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* === ギミック：最終確認ボタン === */
+.remember-btn {
+  font-size: 0.7em;
+  margin-left: 0.5em;
+  padding: 0.2em 0.5em;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-family: inherit;
+}
+.remember-btn:hover {
+  color: rgba(255,255,255,0.8);
+}
