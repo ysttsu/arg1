@@ -220,3 +220,15 @@ body.is-404 a{color:#d7e6ff}
   text-align:center;
   margin:16px 0 32px;
 }
+
+/* === ギミック：スクロール到達マーカー === */
+.scroll-marker {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.8em;
+  text-align: center;
+  margin-top: 2em;
+  transition: color 0.3s;
+}
+.scroll-marker.revealed {
+  color: rgba(255, 255, 255, 0.5);
+}

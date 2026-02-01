@@ -32,6 +32,7 @@
     </div>
 
     <p class="small">※追記するかも</p>
+    <p class="scroll-marker" id="scrollMarker">ここまで。</p>
     <p><a href="./index.html">TOPへ</a></p>
   </div>
 
@@ -39,9 +40,6 @@
   <script>
   (() => {
     const visits = window.Arg1.addPageVisit("profile");
-    if (visits >= 1) {
-      window.Arg1.grantFrag("frag_profile");
-    }
 
     const setText = (id, text) => {
       const el = document.getElementById(id);
@@ -66,6 +64,23 @@
     }
     if (window.Arg1.hasFrag("frag_archive")) {
       setText("note", "最後まで、置いとく。");
+    }
+
+    // スクロール到達でフラグ付与
+    const marker = document.getElementById("scrollMarker");
+    if (marker && !window.Arg1.hasFrag("frag_profile")) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            marker.classList.add("revealed");
+            window.Arg1.grantFrag("frag_profile");
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 1.0 });
+      observer.observe(marker);
+    } else if (marker) {
+      marker.classList.add("revealed");
     }
   })();
   </script>
