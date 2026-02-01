@@ -48,13 +48,15 @@
     const visitEl = document.getElementById("visitCount");
     if (visitEl) visitEl.textContent = String(visits);
 
+    // 完成状態かどうか
+    const isComplete = window.Arg1.hasFrag("frag_archive") && window.Arg1.hasFrag("frag_yoru");
+
     const items = [
-      { label: "自己紹介", href: "./profile.html", note: "（とりあえず）" },
+      { label: "自己紹介", href: "./profile.html", note: isComplete ? "（そろった）" : "（とりあえず）" },
       { label: "日記", href: "./diary.html", note: "（たまに更新）", req: ["frag_profile"] },
       { label: "リンク", href: "./links.html", note: "（巡回用）", req: ["frag_diary"] },
       { label: "掲示板", href: "./bbs.html", note: "（ログ）", req: ["frag_links"] },
-      { label: "アーカイブ", href: "./archive.html", note: "（古いメモ）", req: ["frag_bbs"] },
-      { label: "完成ページ", href: "./profile.html", note: "（たぶん）", req: ["frag_archive", "frag_yoru"] }
+      { label: "アーカイブ", href: "./archive.html", note: "（古いメモ）", req: ["frag_bbs"] }
     ];
 
     const list = document.getElementById("menuList");

@@ -50,6 +50,7 @@
     const list = document.getElementById("linkList");
     const hoveredSet = new Set();
     let totalItems = 0;
+    let completed = false; // 完了フラグ（連続発火防止）
 
     items.forEach((item, index) => {
       if (!item.show) return;
@@ -61,11 +62,13 @@
       // ホバー検知（フラグ未取得時のみ）
       if (!window.Arg1.hasFrag("frag_links")) {
         li.addEventListener("mouseenter", () => {
+          if (completed) return; // 完了後は何もしない
           hoveredSet.add(index);
           li.classList.add("hovered");
 
           // 全項目ホバー完了チェック
           if (hoveredSet.size === totalItems) {
+            completed = true;
             window.Arg1.grantFrag("frag_links");
             showCompleteMessage();
           }
@@ -86,6 +89,8 @@
     });
 
     function showCompleteMessage() {
+      // 既にメッセージがあれば何もしない
+      if (document.querySelector(".hover-complete-msg")) return;
       const msg = document.createElement("p");
       msg.className = "hover-complete-msg";
       msg.textContent = "……全部、見てくれた";

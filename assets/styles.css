@@ -323,18 +323,29 @@ body.is-404 a{color:#d7e6ff}
 }
 
 /* === ギミック：隠しメモ（yoru.html） === */
+.hidden-memo-container {
+  margin-top: 3em;
+}
+.hidden-memo-container.deeper-container {
+  margin-top: 5em;
+  margin-bottom: 3em;
+}
 .hidden-memo {
-  opacity: 0.1;
-  transition: opacity 0.3s;
+  opacity: 0.04;
+  transition: opacity 0.5s;
+  font-size: 0.85em;
 }
 .hidden-memo:hover {
-  opacity: 0.3;
+  opacity: 0.15;
 }
 .hidden-memo.deeper {
-  opacity: 0.05;
+  opacity: 0.02;
+  font-size: 0.75em;
+  text-align: right;
+  padding-right: 2em;
 }
 .hidden-memo.deeper:hover {
-  opacity: 0.15;
+  opacity: 0.08;
 }
 
 /* === 危機イベント（404専用） === */
