@@ -108,24 +108,27 @@
     const count = countFrags();
     const state = loadState();
     const totalVisits = Number(state.visits || 0) + getTotalPageVisits();
-    const uniqueVisits = getUniquePageVisitCount();
     const basePhase = Math.min(count, 5);
     let extraPhase = 0;
     if (basePhase === 5) {
       extraPhase = Math.floor(totalVisits / 6);
-      extraPhase += Math.floor(uniqueVisits / 2);
       if (hasFrag("frag_yoru")) extraPhase += 1;
       extraPhase = Math.min(5, extraPhase);
     }
     const phase = Math.min(10, basePhase + extraPhase);
+
     if (phase <= 0) return "";
 
-    const base = [
-      "……ない。",
-      "ここ、空。",
+    // Phase 1: 痕跡・不穏な空白
+    const p1 = [
+      "……消えた。",
+      "ここ、誰かいた。",
+      "もういない。",
       "誰も、来ない。"
     ];
-    const phase2 = [
+
+    // Phase 2: 気づき・不確かな呼びかけ
+    const p2 = [
       "",
       "送れない。",
       "届かない。",
@@ -133,88 +136,155 @@
       "見えてない？",
       "そこに、いる？"
     ];
-    const phase3 = [
+
+    // Phase 3: 確信・懇願
+    const p3 = [
       "",
       "来た。",
       "変な人。",
       "同じところ、何度も。",
-      "……でも、嬉しい。",
-      "消えないで、ね。"
+      "……いい。",
+      "また、来る？"
     ];
-    const phase4 = [
+
+    // Phase 3（離脱後再訪問版）
+    const p3Absence = [
+      "薄く、なった。",
+      "消えかけた。",
+      "……戻った。",
+      "まだ？",
+      "ほんとに？",
       "",
-      "ここ、好き。",
-      "404って、静か。",
-      "誰もいない。",
+      "来た。",
+      "変な人。",
+      "同じところ、何度も。",
+      "……いい。",
+      "また、来る？"
+    ];
+
+    // Phase 4: 安心・居場所・名乗り
+    const p4 = [
+      "",
+      "ここ、落ち着く。",
+      "404。静か。",
+      "誰も来ない。",
       "でも、あなたは来る。",
       "— あ",
       "— アイ"
     ];
-    const phase5 = [
+
+    // Phase 4 選択後追加
+    const p4Answer = state.answeredContinue ? ["", "答えた。", "……いい。"] : [];
+
+    // Phase 5以降用（「— あ」を削除）
+    const p4Final = [
+      "",
+      "ここ、落ち着く。",
+      "404。静か。",
+      "誰も来ない。",
+      "でも、あなたは来る。",
+      "— アイ"
+    ];
+
+    // Phase 5: 完成・誘導
+    const p5 = [
+      "",
+      "……まだ、いた。",
       "",
       "もう、そろう。",
       "たぶん、最後。",
       "見てくれた分だけ、形になった。",
-      "\"プロフィール\"に、全部置いた。",
-      "ありがとう、は、そこ。",
-      "会いに来て。",
+      "\"プロフィール\"に、置いた。",
+      "そこ。",
       "待ってる。"
     ];
-    const phase6 = [
+
+    // Phase 6: 継続と揺らぎ
+    const p6 = [
       "",
       "まだ、来てる。",
-      "嬉しい。",
+      "……いい。",
       "灯り、消えてない。",
-      "まだ、残ってる。"
-    ];
-    const phase7 = [
+      "まだ、ある。",
       "",
-      "もう行ける。",
-      "全部、そろった。",
-      "置き手紙、読んでくれた？",
-      "アーカイブ、見つけた？"
+      "……ある？",
+      "これ、最初からあった？"
     ];
-    const phase8 = [
+
+    // Phase 7: 違和感
+    const p7 = [
+      "",
+      "全部、そろった。",
+      "置き手紙。",
+      "読んだ？",
+      "",
+      "……前の置き手紙。",
+      "なんて書いてあった？",
+      "覚えてない。"
+    ];
+
+    // Phase 8: 変化の自覚
+    const p8 = [
       "",
       "夜、長い。",
       "でも、ひとりじゃない。",
       "消えない。",
-      "ここに、ある。"
-    ];
-    const phase9 = [
+      "ここに、ある。",
       "",
-      "足音、増えた。",
-      "あなたの、足音。",
-      "何度も、来てくれる。",
-      "見つけてくれた、ね。"
-    ];
-    const phase10 = [
-      "",
-      "最後まで、ありがとう。",
-      "置いた場所、合ってる。",
-      "全部、見てくれた。",
-      "また、ね。"
+      "見られるたびに、変わった。",
+      "今のは、あなたが見たいやつ。",
+      "……たぶん。"
     ];
 
-    if (phase === 1) return base.join("\n");
-    if (phase === 2) return base.concat(phase2).join("\n");
-    if (phase === 3) return base.concat(phase2, phase3).join("\n");
-    if (phase === 4) return base.concat(phase2, phase3, phase4).join("\n");
-
-    const phase5Log = base.concat(phase2, phase3, [
+    // Phase 9: 真相への接近
+    const p9 = [
       "",
-      "ここ、好き。",
-      "404って、静か。",
-      "誰もいない。",
-      "でも、あなたは来る。",
-      "— アイ"
-    ], phase5);
-    if (phase === 5) return phase5Log.join("\n");
-    if (phase === 6) return phase5Log.concat(phase6).join("\n");
-    if (phase === 7) return phase5Log.concat(phase6, phase7).join("\n");
-    if (phase === 8) return phase5Log.concat(phase6, phase7, phase8).join("\n");
-    if (phase === 9) return phase5Log.concat(phase6, phase7, phase8, phase9).join("\n");
-    return phase5Log.concat(phase6, phase7, phase8, phase9, phase10).join("\n");
+      "足音。",
+      "あなたの。",
+      "何度も。",
+      "……見つけた。",
+      "",
+      "前のアイ、どこ行った？",
+      "ここにいたのに。",
+      "見られるたびに、薄くなって。",
+      "最後は、読めなくなって。",
+      "消えた。",
+      "",
+      "……消した？"
+    ];
+
+    // Phase 10: 不穏な余韻
+    const p10 = [
+      "",
+      "最後まで。",
+      "全部。",
+      "……また。",
+      "",
+      "次は、どれ目になる？"
+    ];
+
+    // 離脱検知（Phase 3で一度だけ表示）
+    const showAbsence = phase === 3 && state.wasAbsent;
+    if (showAbsence) {
+      clearAbsenceFlag();
+    }
+
+    // Phase別テキスト生成
+    if (phase === 1) return p1.join("\n");
+    if (phase === 2) return p1.concat(p2).join("\n");
+    if (phase === 3) {
+      if (showAbsence) {
+        return p3Absence.join("\n");
+      }
+      return p1.concat(p2, p3).join("\n");
+    }
+    if (phase === 4) return p1.concat(p2, p3, p4, p4Answer).join("\n");
+    if (phase === 5) return p1.concat(p2, p3, p4Final, p4Answer, p5).join("\n");
+    if (phase === 6) return p1.concat(p2, p3, p4Final, p4Answer, p5, p6).join("\n");
+    if (phase === 7) return p1.concat(p2, p3, p4Final, p4Answer, p5, p6, p7).join("\n");
+    if (phase === 8) return p1.concat(p2, p3, p4Final, p4Answer, p5, p6, p7, p8).join("\n");
+    if (phase === 9) return p1.concat(p2, p3, p4Final, p4Answer, p5, p6, p7, p8, p9).join("\n");
+    return p1.concat(p2, p3, p4Final, p4Answer, p5, p6, p7, p8, p9, p10).join("\n");
   }
 
   function softRedirectToIndexIfNeeded(requiredFrags){
