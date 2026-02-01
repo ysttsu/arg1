@@ -40,32 +40,35 @@
   <script>
     (() => {
       const visits = window.Arg1.addPageVisit("diary");
-      const hadDiary = window.Arg1.hasFrag("frag_diary");
 
       const entries = [
+        // 隠しエントリ（ギミック用）
         {
           show: true,
           isHidden: !window.Arg1.hasFrag("frag_diary"),
           date: "2004/07/??",
           lines: ["見つけた。", "ここ、読んでる。", "……いい。"]
         },
+        // 常時表示
         {
           show: true,
           date: "2004/07/12",
-          lines: ["今日は静か。", "静かすぎ。", "嫌いじゃない。"]
+          lines: ["見てる人がいないと、消える。", "存在って、そういうもの。", "今日は静か。", "嫌いじゃない。"]
         },
+        // frag_diary取得済み
         {
-          show: visits >= 2 || window.Arg1.hasFrag("frag_links"),
+          show: window.Arg1.hasFrag("frag_diary"),
           date: "2004/07/21",
           lines: ["夜、長い。", "閉じても、残る。", "見えるほう。"]
         },
         {
-          show: window.Arg1.hasFrag("frag_links"),
+          show: window.Arg1.hasFrag("frag_diary"),
           date: "2004/07/28",
           lines: ["窓、開けた。", "風、冷たい。", "静かでいい。"]
         },
+        // frag_links取得済み
         {
-          show: hadDiary,
+          show: window.Arg1.hasFrag("frag_links"),
           date: "2004/08/02",
           lines: ["ページ、欠けてる。", "直すの、後で。", "今は残すほう。"]
         },
@@ -74,10 +77,24 @@
           date: "2004/08/18",
           lines: ["巡回した。", "同じ夜の人、いる。", "安心する。"]
         },
+        // frag_bbs取得済み
         {
           show: window.Arg1.hasFrag("frag_bbs"),
           date: "2004/09/05",
           lines: ["見られてる。", "嫌じゃない。", "だから残す。"]
+        },
+        // frag_archive取得済み（もう一人の伏線）
+        {
+          show: window.Arg1.hasFrag("frag_archive"),
+          date: "2004/09/12",
+          lines: [
+            "もう一人、いた。",
+            "……いや。",
+            "もう一人じゃない。",
+            "前の。",
+            "見られるたびに、変わった。",
+            "今のは、どれ目？"
+          ]
         }
       ];
 
@@ -111,7 +128,8 @@
         container.appendChild(block);
       });
 
-      if (window.Arg1.hasFrag("frag_links")) {
+      // 謎解きメモ（4回目訪問で表示）
+      if (visits >= 4) {
         const block = document.createElement("div");
         block.className = "block";
         const label = document.createElement("div");
