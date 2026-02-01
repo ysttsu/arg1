@@ -52,13 +52,20 @@
     }
 
     const visits = window.Arg1.addPageVisit("archive");
+    const block = document.querySelector(".block");
+    if (!block) return;
+
+    // frag_archive取得済み：追加コンテンツ
     if (window.Arg1.hasFrag("frag_archive")) {
-      const block = document.querySelector(".block");
-      if (!block) return;
       const extra = [
         "繋げる。",
         "ほどけない。",
-        "手を、離さない。"
+        "手を、離さない。",
+        "前のページ、消した。",
+        "前の、も。",
+        "見ない方が良かったから。",
+        "でも、残ってるかも。",
+        "404の奥に。"
       ];
       extra.forEach((line) => {
         const p = document.createElement("p");
@@ -66,25 +73,9 @@
         block.appendChild(p);
       });
     }
-    if (window.Arg1.hasFrag("frag_archive")) {
-      const block = document.querySelector(".block");
-      if (!block) return;
-      const more = [
-        "前のページ、消した。",
-        "前の、も。",
-        "見ない方が良かったから。",
-        "でも、残ってるかも。",
-        "404の奥に。"
-      ];
-      more.forEach((line) => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        block.appendChild(p);
-      });
-    }
+
+    // frag_yoru取得済み：最終コンテンツ
     if (window.Arg1.hasFrag("frag_yoru")) {
-      const block = document.querySelector(".block");
-      if (!block) return;
       const last = [
         "もう少し。",
         "最後まで、残す。"

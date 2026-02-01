@@ -95,14 +95,20 @@
       const qBlock = document.getElementById("questionBlock");
       if (qBlock) {
         qBlock.style.display = "block";
-        document.getElementById("btnYes").onclick = () => {
-          window.Arg1.markAnsweredContinue();
-          qBlock.style.display = "none";
-        };
-        document.getElementById("btnSilent").onclick = () => {
-          window.Arg1.markAnsweredContinue();
-          qBlock.style.display = "none";
-        };
+        const btnYes = document.getElementById("btnYes");
+        const btnSilent = document.getElementById("btnSilent");
+        if (btnYes) {
+          btnYes.onclick = () => {
+            window.Arg1.markAnsweredContinue();
+            qBlock.style.display = "none";
+          };
+        }
+        if (btnSilent) {
+          btnSilent.onclick = () => {
+            window.Arg1.markAnsweredContinue();
+            qBlock.style.display = "none";
+          };
+        }
       }
     }
 

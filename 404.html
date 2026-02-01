@@ -10,6 +10,19 @@
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body class="is-404">
+  <div id="crisisOverlay" class="crisis-overlay" style="display:none;">
+    <div class="crisis-text">
+      <p>終わり、かも。</p>
+      <p></p>
+      <p>形、できた。</p>
+      <p>でも。</p>
+      <p>見てる人、いなくなったら。</p>
+      <p>……消える。</p>
+      <p></p>
+      <p>また。</p>
+    </div>
+  </div>
+
   <div class="wrap">
     <h1>404 Not Found</h1>
     <p>お探しのページは見つかりませんでした。</p>
@@ -21,6 +34,19 @@
   <script src="./assets/common.js"></script>
   <script>
   (() => {
+    // 危機イベント判定（5フラグ取得直後の初回404訪問）
+    if (window.Arg1.shouldShowCrisisEvent()) {
+      const overlay = document.getElementById("crisisOverlay");
+      if (overlay) {
+        overlay.style.display = "flex";
+        window.Arg1.markCrisisShown();
+        setTimeout(() => {
+          overlay.style.display = "none";
+        }, 8000); // 8秒後に消える
+      }
+    }
+
+    // 既存のログ表示処理
     const logText = window.Arg1.getAi404LogText();
     const logEl = document.getElementById("aiLog");
     if (logEl && logText) {

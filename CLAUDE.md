@@ -43,8 +43,18 @@ The entire progression system is built on `window.Arg1` global object:
 
 **Fragment System**:
 - 5 main fragments: `frag_profile`, `frag_diary`, `frag_links`, `frag_bbs`, `frag_archive`
-- Additional fragment: `frag_yoru` (bonus page)
-- Fragments unlock as users visit pages multiple times
+- Additional fragment: `frag_yoru` (bonus page, discovered via puzzle)
+- Fragments unlock via **gimmicks (user interactions)**, not visit count
+
+**Gimmick-based Fragment Acquisition**:
+| Fragment | Page | Gimmick |
+|----------|------|---------|
+| `frag_profile` | profile.html | Scroll to bottom ("ここまで。" marker) |
+| `frag_diary` | diary.html | Click hidden entry (opacity: 0.15) |
+| `frag_links` | links.html | Hover all link items |
+| `frag_bbs` | bbs.html | Click "返信する（停止中）" button |
+| `frag_archive` | archive.html | Click "そのうち" hidden link |
+| `frag_yoru` | yoru.html | Visit page (URL guessed from diary puzzle) |
 
 **Key Functions**:
 - `grantFrag(id)` - Grant a fragment to the user
@@ -54,6 +64,10 @@ The entire progression system is built on `window.Arg1` global object:
 - `addPageVisit(pageId)` - Track visits per page
 - `getAi404LogText()` - Generate phase-based 404 message
 - `softRedirectToIndexIfNeeded(requiredFrags)` - Silent redirect if requirements not met
+- `checkAbsence()` - Detect 5+ minute absence (for special 404 message)
+- `shouldShowCrisisEvent()` / `markCrisisShown()` - Crisis event at 5 frags
+- `hasAnsweredContinue()` / `markAnsweredContinue()` - Profile "続き?" choice tracking
+- `hasRememberedAi()` / `markRememberedAi()` - Final "覚えてる?" button tracking
 
 **Storage Structure**:
 ```javascript
@@ -66,7 +80,13 @@ The entire progression system is built on `window.Arg1` global object:
   "pageVisits": {
     "profile": 3,
     "diary": 2
-  }
+  },
+  "flags": { "seenSignature": true },
+  "lastVisitTime": 1700000000000,
+  "wasAbsent": false,
+  "crisisShown": false,
+  "answeredContinue": false,
+  "rememberedAi": false
 }
 ```
 
@@ -80,34 +100,46 @@ The entire progression system is built on `window.Arg1` global object:
 
 **Content Revelation Pattern**:
 1. Menu items appear on TOP as fragments unlock
-2. Page content fills in/expands with repeated visits
+2. Page content expands based on **other pages' fragments** (circular structure)
 3. 404 page messages evolve through 10 phases based on fragment count + visit count
+4. profile.html acts as a "progress dashboard" - revisit after getting fragments to see changes
 
 ### 404 Phase System
 
 The 404 page is the only place "Ai" speaks. The message evolves through phases:
 
 - **Phase calculation**: `basePhase = min(fragmentCount, 5)` + bonus phases from visit count and `frag_yoru`
-- **Phase 0-1**: Recognition ("……ない。" / "ここ、空。")
-- **Phase 2-3**: Awareness of visitor
-- **Phase 4**: Signature appears ("— アイ")
-- **Phase 5**: Hints at completion page
-- **Phase 6-10**: Additional progression messages based on total activity
+- **Phase 0**: No message
+- **Phase 1**: Traces of someone ("……消えた。" "ここ、誰かいた。")
+- **Phase 2**: Awareness of visitor ("送れない。" "そこに、いる？")
+- **Phase 3**: Acknowledgment ("来た。" "また、来る？") - Special variant if absent 5+ minutes
+- **Phase 4**: Signature appears ("— あ" "— アイ") + shows "答えた。" if profile choice made
+- **Phase 5**: Guidance to profile ("\"プロフィール\"に、置いた。")
+- **Phase 6-10**: Unsettling revelations about "previous Ai" and viewer's role
+
+**Crisis Event**: When all 5 main fragments collected, first 404 visit triggers a special overlay message ("終わり、かも。") for 8 seconds.
 
 ### Page Requirements & Fragment Granting
 
 Each page has:
 1. **Entry requirement** - Checked via `softRedirectToIndexIfNeeded()`
-2. **Grant trigger** - Usually after 3+ page visits
-3. **Progressive content** - More content appears with repeated visits
+2. **Grant trigger** - Gimmick interaction (see table above)
+3. **Progressive content** - Content appears based on **other pages' fragments**
 
 **Flow**:
-- `profile.html` → No requirement → Grants `frag_profile` on 3rd visit
-- `diary.html` → Requires `frag_profile` → Grants `frag_diary` on 3rd visit
-- `links.html` → Requires `frag_diary` → Grants `frag_links` on 3rd visit
-- `bbs.html` → Requires `frag_links` → Grants `frag_bbs` on 3rd visit
-- `archive.html` → Requires `frag_bbs` → Grants `frag_archive` on 3rd visit
-- `yoru.html` → No requirement → Grants `frag_yoru` on first visit (hidden page)
+- `profile.html` → No requirement → Grants `frag_profile` on scroll to bottom
+- `diary.html` → Requires `frag_profile` → Grants `frag_diary` on hidden entry click
+- `links.html` → Requires `frag_diary` → Grants `frag_links` on hover-all
+- `bbs.html` → Requires `frag_links` → Grants `frag_bbs` on reply button click
+- `archive.html` → Requires `frag_bbs` → Grants `frag_archive` on hidden link click
+- `yoru.html` → No requirement → Grants `frag_yoru` on first visit (hidden page, discovered via diary puzzle)
+
+**Content Dependencies (Flag-based)**:
+- profile.html fields fill based on: frag_diary → frag_links → frag_bbs → frag_archive
+- diary.html entries appear based on: frag_diary → frag_links → frag_bbs → frag_archive
+- links.html items appear based on: frag_links → frag_bbs → frag_archive
+- bbs.html posts appear based on: frag_bbs → frag_archive
+- archive.html memos appear based on: frag_archive → frag_yoru
 
 ### Natural 404 Hooks
 
@@ -138,14 +170,16 @@ This site is designed for GitHub Pages. Push to the repository and enable GitHub
 
 ### Adding New Content to Existing Pages
 
-When adding diary entries, link items, or BBS posts, follow the existing conditional display pattern:
+When adding diary entries, link items, or BBS posts, follow the **flag-based** conditional display pattern:
 
 ```javascript
 {
-  show: visits >= N || window.Arg1.hasFrag("frag_something"),
+  show: window.Arg1.hasFrag("frag_something"),
   // content...
 }
 ```
+
+Content visibility should depend on **other pages' fragments**, not visit count. This creates a circular structure where completing one page unlocks content on others.
 
 ### Testing Progression States
 
@@ -165,6 +199,9 @@ console.log(window.Arg1.loadState());
 - Fragment count (0-5)
 - Total visit count
 - Presence of `frag_yoru`
+- Absence status (`wasAbsent` - 5+ minute absence triggers special Phase 3 variant)
+- Profile choice status (`answeredContinue` - affects Phase 4 message)
+- Final confirmation status (`rememberedAi` - affects Phase 6+ messages)
 
 ## Design Constraints
 

@@ -336,3 +336,31 @@ body.is-404 a{color:#d7e6ff}
 .hidden-memo.deeper:hover {
   opacity: 0.15;
 }
+
+/* === 危機イベント（404専用） === */
+.crisis-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: crisisFadeIn 2s ease-in;
+}
+.crisis-text {
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 2;
+}
+.crisis-text p {
+  margin: 0.5em 0;
+}
+@keyframes crisisFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
