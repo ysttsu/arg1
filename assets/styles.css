@@ -321,3 +321,18 @@ body.is-404 a{color:#d7e6ff}
 .hidden-link {
   cursor: text;
 }
+
+/* === ギミック：隠しメモ（yoru.html） === */
+.hidden-memo {
+  opacity: 0.1;
+  transition: opacity 0.3s;
+}
+.hidden-memo:hover {
+  opacity: 0.3;
+}
+.hidden-memo.deeper {
+  opacity: 0.05;
+}
+.hidden-memo.deeper:hover {
+  opacity: 0.15;
+}
