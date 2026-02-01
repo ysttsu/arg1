@@ -32,6 +32,10 @@
     <p><a href="./rules.html">掲示板ルール</a></p>
     <p class="small">（未整備）</p>
 
+    <div class="reply-section">
+      <button id="replyBtn" class="reply-btn">返信する（停止中）</button>
+    </div>
+
     <p><a href="./index.html">TOPへ</a></p>
   </div>
 
@@ -39,9 +43,6 @@
   (() => {
     const visits = window.Arg1.addPageVisit("bbs");
     const hadBbs = window.Arg1.hasFrag("frag_bbs");
-    if (visits >= 1) {
-      window.Arg1.grantFrag("frag_bbs");
-    }
 
     const logs = [
       {
@@ -97,6 +98,19 @@
       });
       container.appendChild(block);
     });
+    // 返信ボタン処理
+    const replyBtn = document.getElementById("replyBtn");
+    if (replyBtn && !window.Arg1.hasFrag("frag_bbs")) {
+      replyBtn.onclick = () => {
+        const originalText = replyBtn.textContent;
+        replyBtn.textContent = "……届いた";
+        replyBtn.classList.add("delivered");
+        window.Arg1.grantFrag("frag_bbs");
+        setTimeout(() => {
+          replyBtn.textContent = originalText;
+        }, 1500);
+      };
+    }
   })();
   </script>
 </body>

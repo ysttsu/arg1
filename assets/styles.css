@@ -296,3 +296,23 @@ body.is-404 a{color:#d7e6ff}
 .hover-complete-msg.show {
   opacity: 1;
 }
+
+/* === ギミック：返信ボタン === */
+.reply-section {
+  margin: 1.5em 0;
+}
+.reply-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: inherit;
+}
+.reply-btn:hover {
+  color: rgba(255,255,255,0.7);
+}
+.reply-btn.delivered {
+  border-color: rgba(255,255,255,0.5);
+}
