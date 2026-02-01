@@ -13,7 +13,17 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) return JSON.parse(raw);
     } catch (e) {}
-    return { frags: {}, visits: 0, pageVisits: {}, flags: {} };
+    return {
+      frags: {},
+      visits: 0,
+      pageVisits: {},
+      flags: {},
+      lastVisitTime: 0,
+      wasAbsent: false,
+      crisisShown: false,
+      answeredContinue: false,
+      rememberedAi: false
+    };
   }
 
   function saveState(state){
@@ -218,6 +228,72 @@
     return true;
   }
 
+  // 離脱検知関数（5分以上離脱で wasAbsent = true）
+  const ABSENCE_THRESHOLD_MS = 5 * 60 * 1000; // 5分
+
+  function checkAbsence(){
+    const state = loadState();
+    const now = Date.now();
+    const lastTime = Number(state.lastVisitTime || 0);
+    if (lastTime > 0 && (now - lastTime) >= ABSENCE_THRESHOLD_MS) {
+      state.wasAbsent = true;
+    }
+    state.lastVisitTime = now;
+    saveState(state);
+  }
+
+  function clearAbsenceFlag(){
+    const state = loadState();
+    state.wasAbsent = false;
+    saveState(state);
+  }
+
+  function isAbsent(){
+    const state = loadState();
+    return Boolean(state.wasAbsent);
+  }
+
+  // 危機イベント関数
+  function shouldShowCrisisEvent(){
+    const state = loadState();
+    return countFrags() === 5 && !state.crisisShown;
+  }
+
+  function markCrisisShown(){
+    const state = loadState();
+    state.crisisShown = true;
+    saveState(state);
+  }
+
+  function hasCrisisShown(){
+    const state = loadState();
+    return Boolean(state.crisisShown);
+  }
+
+  // profile選択関数
+  function hasAnsweredContinue(){
+    const state = loadState();
+    return Boolean(state.answeredContinue);
+  }
+
+  function markAnsweredContinue(){
+    const state = loadState();
+    state.answeredContinue = true;
+    saveState(state);
+  }
+
+  // 最終確認関数
+  function hasRememberedAi(){
+    const state = loadState();
+    return Boolean(state.rememberedAi);
+  }
+
+  function markRememberedAi(){
+    const state = loadState();
+    state.rememberedAi = true;
+    saveState(state);
+  }
+
   window.Arg1 = {
     loadState,
     saveState,
@@ -234,5 +310,19 @@
     hasSeenSignature,
     getAi404LogText,
     softRedirectToIndexIfNeeded,
+    // 離脱検知
+    checkAbsence,
+    clearAbsenceFlag,
+    isAbsent,
+    // 危機イベント
+    shouldShowCrisisEvent,
+    markCrisisShown,
+    hasCrisisShown,
+    // profile選択
+    hasAnsweredContinue,
+    markAnsweredContinue,
+    // 最終確認
+    hasRememberedAi,
+    markRememberedAi,
   };
 })();
