@@ -33,46 +33,18 @@
     const visits = window.Arg1.addPageVisit("links");
 
     const items = [
-      {
-        show: true,
-        label: "夜の文字置き場",
-        note: "眠れない用。"
-      },
-      {
-        show: true,
-        label: "炭酸研究所",
-        note: "冷たいのが正義。"
-      },
-      {
-        show: visits >= 2 || window.Arg1.hasFrag("frag_bbs"),
-        label: "曇りガラス同盟",
-        note: "ぼやけたまま。"
-      },
-      {
-        show: visits >= 2 || window.Arg1.hasFrag("frag_bbs"),
-        label: "工事中同盟",
-        note: "未完成が好き。"
-      },
-      {
-        show: window.Arg1.hasFrag("frag_links"),
-        label: "掲示板ログ保管庫",
-        note: "声が残る。"
-      },
-      {
-        show: window.Arg1.hasFrag("frag_bbs"),
-        label: "404の静けさ",
-        note: "行き止まり、落ち着く。"
-      },
-      {
-        show: visits >= 3 || window.Arg1.hasFrag("frag_archive"),
-        label: "夜更かしノート",
-        note: "ねむれない用。"
-      },
-      {
-        show: visits >= 4 || window.Arg1.hasFrag("frag_archive"),
-        label: "欠片リスト",
-        note: "埋まるまで。"
-      }
+      // 常時表示
+      { show: true, label: "夜の文字置き場", note: "眠れない用。" },
+      { show: true, label: "炭酸研究所", note: "冷たいのが正義。" },
+      // frag_links取得済み
+      { show: window.Arg1.hasFrag("frag_links"), label: "曇りガラス同盟", note: "ぼやけたまま。" },
+      { show: window.Arg1.hasFrag("frag_links"), label: "工事中同盟", note: "未完成が好き。" },
+      { show: window.Arg1.hasFrag("frag_links"), label: "掲示板ログ保管庫", note: "声が残る。" },
+      // frag_bbs取得済み
+      { show: window.Arg1.hasFrag("frag_bbs"), label: "404の静けさ", note: "行き止まり、落ち着く。" },
+      { show: window.Arg1.hasFrag("frag_bbs"), label: "夜更かしノート", note: "ねむれない用。" },
+      // frag_archive取得済み
+      { show: window.Arg1.hasFrag("frag_archive"), label: "欠片リスト", note: "埋まるまで。" }
     ];
 
     const list = document.getElementById("linkList");
