@@ -41,45 +41,19 @@
 
   <script>
   (() => {
-    const visits = window.Arg1.addPageVisit("bbs");
-    const hadBbs = window.Arg1.hasFrag("frag_bbs");
+    window.Arg1.addPageVisit("bbs");
 
     const logs = [
-      {
-        show: true,
-        name: "名無しさん",
-        lines: ["見てるよ。", "更新まだ？"]
-      },
-      {
-        show: true,
-        name: "管理人",
-        lines: ["そのうち。", "気分。"]
-      },
-      {
-        show: visits >= 3 || hadBbs,
-        name: "通りすがり",
-        lines: ["言い方きついけど。", "優しい。"]
-      },
-      {
-        show: visits >= 3 || hadBbs,
-        name: "名無しさん",
-        lines: ["このサイト、落ち着く。"]
-      },
-      {
-        show: window.Arg1.hasFrag("frag_archive"),
-        name: "名無しさん",
-        lines: ["アーカイブって、まだ？"]
-      },
-      {
-        show: window.Arg1.hasFrag("frag_archive"),
-        name: "管理人",
-        lines: ["ログ整理中。", "気長に。"]
-      },
-      {
-        show: window.Arg1.hasFrag("frag_archive"),
-        name: "名無しさん",
-        lines: ["ページ、消えてない？", "大丈夫？"]
-      }
+      // 常時表示
+      { show: true, name: "名無しさん", lines: ["見てるよ。", "更新まだ？"] },
+      { show: true, name: "管理人", lines: ["そのうち。", "気分。"] },
+      // frag_bbs取得済み
+      { show: window.Arg1.hasFrag("frag_bbs"), name: "通りすがり", lines: ["言い方きついけど。", "優しい。"] },
+      { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["このサイト、落ち着く。"] },
+      { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["アーカイブって、まだ？"] },
+      // frag_archive取得済み
+      { show: window.Arg1.hasFrag("frag_archive"), name: "管理人", lines: ["ログ整理中。", "気長に。"] },
+      { show: window.Arg1.hasFrag("frag_archive"), name: "名無しさん", lines: ["ページ、消えてない？", "大丈夫？"] }
     ];
 
     const container = document.getElementById("bbsLogs");
@@ -101,13 +75,15 @@
     // 返信ボタン処理
     const replyBtn = document.getElementById("replyBtn");
     if (replyBtn && !window.Arg1.hasFrag("frag_bbs")) {
+      const originalText = replyBtn.textContent;
       replyBtn.onclick = () => {
-        const originalText = replyBtn.textContent;
+        replyBtn.disabled = true;
         replyBtn.textContent = "……届いた";
         replyBtn.classList.add("delivered");
         window.Arg1.grantFrag("frag_bbs");
         setTimeout(() => {
           replyBtn.textContent = originalText;
+          replyBtn.disabled = false;
         }, 1500);
       };
     }
