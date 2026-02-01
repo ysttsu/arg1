@@ -32,17 +32,27 @@
       <p>消したくない。</p>
     </div>
 
-    <p class="small">※移動：完成ページ（そのうち）</p>
+    <p class="small">※移動：完成ページ（<span id="hiddenLink" class="hidden-link">そのうち</span>）</p>
     <p><a href="./index.html">TOPへ</a></p>
   </div>
 
   <script>
   (() => {
-    const visits = window.Arg1.addPageVisit("archive");
-    if (visits >= 1) {
-      window.Arg1.grantFrag("frag_archive");
+    // 隠しリンク処理
+    const hiddenLink = document.getElementById("hiddenLink");
+    if (hiddenLink && !window.Arg1.hasFrag("frag_archive")) {
+      const originalText = hiddenLink.textContent;
+      hiddenLink.onclick = () => {
+        hiddenLink.textContent = "……待ってて";
+        window.Arg1.grantFrag("frag_archive");
+        setTimeout(() => {
+          hiddenLink.textContent = originalText;
+        }, 1500);
+      };
     }
-    if (window.Arg1.getUniquePageVisitCount() >= 4) {
+
+    const visits = window.Arg1.addPageVisit("archive");
+    if (window.Arg1.hasFrag("frag_archive")) {
       const block = document.querySelector(".block");
       if (!block) return;
       const extra = [
@@ -56,14 +66,30 @@
         block.appendChild(p);
       });
     }
-    if (window.Arg1.getUniquePageVisitCount() >= 6) {
+    if (window.Arg1.hasFrag("frag_archive")) {
       const block = document.querySelector(".block");
       if (!block) return;
       const more = [
+        "前のページ、消した。",
+        "前の、も。",
+        "見ない方が良かったから。",
+        "でも、残ってるかも。",
+        "404の奥に。"
+      ];
+      more.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        block.appendChild(p);
+      });
+    }
+    if (window.Arg1.hasFrag("frag_yoru")) {
+      const block = document.querySelector(".block");
+      if (!block) return;
+      const last = [
         "もう少し。",
         "最後まで、残す。"
       ];
-      more.forEach((line) => {
+      last.forEach((line) => {
         const p = document.createElement("p");
         p.textContent = line;
         block.appendChild(p);

@@ -316,3 +316,8 @@ body.is-404 a{color:#d7e6ff}
 .reply-btn.delivered {
   border-color: rgba(255,255,255,0.5);
 }
+
+/* === ギミック：隠しリンク === */
+.hidden-link {
+  cursor: text;
+}
