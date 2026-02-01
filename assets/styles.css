@@ -266,3 +266,17 @@ body.is-404 a{color:#d7e6ff}
 .remember-btn:hover {
   color: rgba(255,255,255,0.8);
 }
+
+/* === ギミック：隠しエントリ === */
+.hidden-entry {
+  opacity: 0.15;
+  cursor: default;
+  transition: opacity 0.3s;
+}
+.hidden-entry:hover {
+  opacity: 0.4;
+}
+.hidden-entry.revealed {
+  opacity: 1;
+  cursor: default;
+}

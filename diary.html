@@ -41,11 +41,14 @@
     (() => {
       const visits = window.Arg1.addPageVisit("diary");
       const hadDiary = window.Arg1.hasFrag("frag_diary");
-      if (visits >= 1) {
-        window.Arg1.grantFrag("frag_diary");
-      }
 
       const entries = [
+        {
+          show: true,
+          isHidden: !window.Arg1.hasFrag("frag_diary"),
+          date: "2004/07/??",
+          lines: ["見つけた。", "ここ、読んでる。", "……いい。"]
+        },
         {
           show: true,
           date: "2004/07/12",
@@ -83,6 +86,19 @@
         if (!entry.show) return;
         const block = document.createElement("div");
         block.className = "block";
+
+        // 隠しエントリの処理
+        if (entry.isHidden) {
+          block.classList.add("hidden-entry");
+          block.onclick = () => {
+            if (!window.Arg1.hasFrag("frag_diary")) {
+              window.Arg1.grantFrag("frag_diary");
+              block.classList.remove("hidden-entry");
+              block.classList.add("revealed");
+            }
+          };
+        }
+
         const date = document.createElement("div");
         date.className = "zprof-heading";
         date.textContent = entry.date;
