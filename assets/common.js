@@ -364,6 +364,42 @@
     saveState(state);
   }
 
+  // === 降るキラキラエフェクト ===
+  const SPARKLE_CHARS = ['☆', '✧', '♡', '♪', '✦', '･ﾟ'];
+  let sparkleInterval = null;
+
+  function startSparkle(){
+    if (sparkleInterval) return;
+    if (document.body.classList.contains('is-404')) return; // 404ページでは降らせない
+
+    const createSparkle = () => {
+      const el = document.createElement('span');
+      el.className = 'sparkle';
+      el.textContent = SPARKLE_CHARS[Math.floor(Math.random() * SPARKLE_CHARS.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (8 + Math.random() * 8) + 'px';
+      el.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 6000);
+    };
+
+    sparkleInterval = setInterval(createSparkle, 400);
+  }
+
+  function stopSparkle(){
+    if (sparkleInterval) {
+      clearInterval(sparkleInterval);
+      sparkleInterval = null;
+    }
+  }
+
+  // ページ読み込み時に自動開始
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startSparkle);
+  } else {
+    startSparkle();
+  }
+
   window.Arg1 = {
     loadState,
     saveState,

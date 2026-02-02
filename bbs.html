@@ -13,11 +13,18 @@
   window.Arg1.softRedirectToIndexIfNeeded(["frag_links"]);
   </script>
 </head>
-<body>
+<body class="has-archive-bar">
+  <div class="archive-bar">
+    <span class="archive-bar__icon">📦</span>
+    <span class="archive-bar__text">このサイトは 200X年 に保存されたアーカイブです</span>
+    <a class="archive-bar__link" href="#">詳細</a>
+  </div>
   <div class="wrap">
     <header>
       <h1>＊掲示板＊</h1>
     </header>
+
+    <div class="retro-marquee"><span>☆ 掲示板 ☆ 荒らしはスルーで ☆ 晒し禁止 ☆</span></div>
 
     <p class="small">ログだけ</p>
     <p class="small">書き込み停止中</p>
@@ -28,7 +35,7 @@
       <button id="replyBtn" class="reply-btn">返信する（停止中）</button>
     </div>
 
-    <hr class="hr" />
+    <div class="deco-hr">━━♡━━♡━━</div>
     <p><a href="./log/200x.html">過去ログ</a></p>
     <p class="small">（無い）</p>
     <p><a href="./report.html">削除依頼フォーム</a></p>

@@ -13,11 +13,18 @@
   window.Arg1.softRedirectToIndexIfNeeded(["frag_bbs"]);
   </script>
 </head>
-<body>
+<body class="has-archive-bar">
+  <div class="archive-bar">
+    <span class="archive-bar__icon">📦</span>
+    <span class="archive-bar__text">このサイトは 200X年 に保存されたアーカイブです</span>
+    <a class="archive-bar__link" href="#">詳細</a>
+  </div>
   <div class="wrap">
     <header>
       <h1>＊アーカイブ＊</h1>
     </header>
+
+    <div class="retro-marquee"><span>✦ 古いメモ ✦ 残す用 ✦ 消さないで ✦</span></div>
 
     <p>古いメモ。</p>
     <p>残す用。</p>
@@ -31,6 +38,8 @@
       <p>見てる人がいるなら。</p>
       <p>消したくない。</p>
     </div>
+
+    <div class="deco-hr">━━✧━━✧━━</div>
 
     <p class="small">※移動：完成ページ（<span id="hiddenLink" class="hidden-link">そのうち</span>）</p>
     <p><a href="./index.html">TOPへ</a></p>

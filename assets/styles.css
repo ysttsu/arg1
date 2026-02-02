@@ -1,29 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
+/* === archive.org風ヘッダー === */
+.archive-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #2d2d2d;
+  color: #b0b0b0;
+  font-size: 10px;
+  padding: 6px 12px;
+  z-index: 10000;
+  font-family: Arial, sans-serif;
+  border-bottom: 1px solid #444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.archive-bar__icon{
+  font-size: 14px;
+}
+.archive-bar__text{
+  flex: 1;
+}
+.archive-bar__link{
+  color: #7cb7ff;
+  text-decoration: underline;
+  font-size: 9px;
+}
+.archive-bar__link:hover{
+  color: #aad4ff;
+}
+body.has-archive-bar{
+  padding-top: 32px;
+}
+body.is-404 .archive-bar{
+  display: none;
+}
+
 :root{
   color-scheme: light;
-  --bg-main: #4db5f1;
-  --bg-accent: #1de1f3;
+  --bg-main: #ffb6c1;
+  --bg-accent: #ff69b4;
+  --text-main: #4a0025;
   --text-white: #fff;
   --text-black: #000;
-  --link-yellow: #e1e00b;
-  --link-hover: #fff;
+  --link-color: #8b0050;
+  --link-hover: #ff1493;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
   min-height:100vh;
   font-family:"DotGothic16", sans-serif;
-  color: var(--text-white);
+  color: var(--text-main);
   line-height:1.8;
   background-color: var(--bg-main);
-  background-image:
-    linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='10' y='20' font-size='14' fill='%23fff' opacity='0.4'%3E☆%3C/text%3E%3Ctext x='40' y='45' font-size='10' fill='%23fff' opacity='0.3'%3E♡%3C/text%3E%3Ctext x='5' y='50' font-size='8' fill='%23fff' opacity='0.25'%3E✧%3C/text%3E%3Ctext x='35' y='15' font-size='6' fill='%23fff' opacity='0.3'%3E♪%3C/text%3E%3C/svg%3E");
+  background-size: 60px 60px;
 }
 body.is-404{
   background: #090909;
@@ -31,15 +65,15 @@ body.is-404{
   color:#eaeaea;
 }
 
-a{color: var(--link-yellow); text-decoration:underline}
+a{color: var(--link-color); text-decoration:underline}
 a:hover{color: var(--link-hover)}
 
 .wrap{
-  max-width: 600px;
-  margin: 20px auto 40px;
-  padding: 20px 24px 28px;
-  background: rgba(255,255,255,0.08);
-  border: 2px solid rgba(255,255,255,0.2);
+  max-width: 320px;
+  margin: 8px auto 24px;
+  padding: 12px 14px 18px;
+  background: rgba(255,255,255,0.7);
+  border: 2px solid var(--bg-accent);
   position: relative;
   animation: floatIn .5s ease both;
 }
@@ -49,9 +83,9 @@ body.is-404 .wrap{
 }
 
 header{
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px dashed rgba(255,255,255,0.3);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--bg-accent);
   text-align: center;
 }
 
@@ -78,7 +112,7 @@ p{margin: 6px 0}
 
 .small{
   font-size: 11px;
-  color: rgba(255,255,255,0.8);
+  color: rgba(74,0,37,0.6);
 }
 
 .menu{
@@ -95,27 +129,27 @@ p{margin: 6px 0}
   content: ">";
   position: absolute;
   left: 0;
-  color: var(--link-yellow);
+  color: var(--bg-accent);
 }
 .menu a{
-  color: var(--text-white);
+  color: var(--link-color);
   text-decoration: underline;
 }
 .menu a:hover{
-  color: var(--link-yellow);
+  color: var(--link-hover);
 }
 
 .note{
   display: inline;
   margin-left: 6px;
   font-size: 11px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(74,0,37,0.5);
 }
 
 .block{
   margin: 10px 0;
   padding: 10px 12px;
-  background: rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.5);
   border-left: 3px solid var(--bg-accent);
 }
 
@@ -125,12 +159,59 @@ p{margin: 6px 0}
   margin: 16px 0;
 }
 
+/* === 2000年代風 絵文字区切り線 === */
+.deco-hr{
+  text-align: center;
+  margin: 12px 0;
+  font-size: 10px;
+  color: var(--bg-accent);
+  letter-spacing: 2px;
+  overflow: hidden;
+}
+
+/* === 2000年代風 marquee === */
+.retro-marquee{
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 10px;
+  color: var(--text-main);
+  padding: 3px 0;
+  background: rgba(255,105,180,0.15);
+  margin: 6px 0;
+}
+.retro-marquee span{
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee-scroll 15s linear infinite;
+}
+@keyframes marquee-scroll{
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* === 降るキラキラ === */
+.sparkle{
+  position: fixed;
+  top: -20px;
+  pointer-events: none;
+  font-size: 12px;
+  opacity: 0;
+  animation: sparkle-fall 4s linear forwards;
+  z-index: 9999;
+}
+@keyframes sparkle-fall{
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+}
+
 .footer{
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px dashed rgba(255,255,255,0.3);
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--bg-accent);
   font-size: 11px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(74,0,37,0.5);
   text-align: center;
 }
 .footer p{margin: 4px 0}
@@ -215,21 +296,22 @@ body.is-404 a{color:#8ab4f8}
 .question-block {
   margin: 1.5em 0;
   padding: 1em;
-  background: rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.5);
   border-left: 3px solid var(--bg-accent);
 }
 .question-block button {
   margin: 0.5em 0.5em 0 0;
   padding: 0.3em 1em;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: inherit;
+  background: #fff;
+  border: 1px solid var(--bg-accent);
+  color: var(--text-main);
   cursor: pointer;
   font-family: inherit;
   font-size: 12px;
 }
 .question-block button:hover {
-  background: rgba(255,255,255,0.2);
+  background: var(--bg-accent);
+  color: #fff;
 }
 
 /* === ギミック：最終確認ボタン === */
@@ -238,14 +320,14 @@ body.is-404 a{color:#8ab4f8}
   margin-left: 0.5em;
   padding: 2px 6px;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.5);
+  border: 1px solid var(--bg-accent);
+  color: rgba(74,0,37,0.5);
   cursor: pointer;
   font-family: inherit;
 }
 .remember-btn:hover {
-  color: rgba(255,255,255,0.8);
-  background: rgba(255,255,255,0.1);
+  color: var(--text-main);
+  background: rgba(255,105,180,0.2);
 }
 
 /* === ギミック：隠しエントリ === */
@@ -271,13 +353,13 @@ body.is-404 a{color:#8ab4f8}
 }
 .link-item.hovered .note::after {
   content: " …見た";
-  opacity: 0.5;
+  color: var(--bg-accent);
 }
 .hover-complete-msg {
   opacity: 0;
   transition: opacity 0.5s;
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(74,0,37,0.6);
   margin-top: 1em;
 }
 .hover-complete-msg.show {
@@ -289,30 +371,31 @@ body.is-404 a{color:#8ab4f8}
   margin: 1em 0;
 }
 .reply-btn {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.6);
+  background: #fff;
+  border: 1px solid var(--bg-accent);
+  color: rgba(74,0,37,0.6);
   padding: 6px 12px;
   cursor: pointer;
   font-size: 12px;
   font-family: inherit;
 }
 .reply-btn:hover {
-  color: rgba(255,255,255,0.9);
-  background: rgba(255,255,255,0.15);
+  color: var(--text-main);
+  background: rgba(255,105,180,0.2);
 }
 .reply-btn.delivered {
   border-color: var(--bg-accent);
-  color: var(--text-white);
+  background: var(--bg-accent);
+  color: #fff;
 }
 
 /* === ギミック：隠しリンク === */
 .hidden-link {
   cursor: text;
-  color: rgba(255,255,255,0.6);
+  color: rgba(74,0,37,0.4);
 }
 .hidden-link:hover {
-  color: rgba(255,255,255,0.8);
+  color: rgba(74,0,37,0.7);
 }
 
 /* === ギミック：隠しメモ（yoru.html） === */
