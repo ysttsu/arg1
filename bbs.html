@@ -51,15 +51,118 @@
     window.Arg1.addPageVisit("bbs");
 
     const logs = [
+      // === 起：和やかな交流 ===
       // 常時表示
+      {
+        show: true,
+        name: "夜更かしさん",
+        lines: [
+          "100番踏みました！",
+          "キリ番報告です♪",
+          "サイトかわいいですね。"
+        ]
+      },
+      {
+        show: true,
+        name: "管理人",
+        lines: [
+          "おめ！ありがと。",
+          "夜中に来てくれてうれしい。",
+          "また来てね。"
+        ]
+      },
+      {
+        show: true,
+        name: "通りすがり",
+        lines: [
+          "セカチュー見ました？",
+          "泣きすぎてティッシュやばかった。"
+        ]
+      },
+      {
+        show: true,
+        name: "管理人",
+        lines: [
+          "見た。泣いた。",
+          "夜中に一人で見るの、しみる。"
+        ]
+      },
       { show: true, name: "名無しさん", lines: ["見てるよ。", "更新まだ？"] },
       { show: true, name: "管理人", lines: ["そのうち。", "気分。"] },
+      // === 承：違和感 ===
       // frag_bbs取得済み
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "常連A",
+        lines: [
+          "管理人さん、最近文体変わった？",
+          "前はもうちょっと絵文字多かったような。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "管理人",
+        lines: ["……そう？", "短いほうが好き。"]
+      },
       { show: window.Arg1.hasFrag("frag_bbs"), name: "通りすがり", lines: ["言い方きついけど。", "優しい。"] },
       { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["このサイト、落ち着く。"] },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "名無しさん",
+        lines: [
+          "前の日記ってどこ行きました？",
+          "6月より前のやつ。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "管理人",
+        lines: [
+          "消した。",
+          "……消えた？",
+          "どっちだっけ。"
+        ]
+      },
       { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["アーカイブって、まだ？"] },
+      // === 転：混乱 ===
       // frag_archive取得済み
       { show: window.Arg1.hasFrag("frag_archive"), name: "管理人", lines: ["ログ整理中。", "気長に。"] },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "古参",
+        lines: [
+          "管理人さん、この前教えてくれた",
+          "おすすめの巡回先、どこでしたっけ？",
+          "ブクマし忘れて。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "管理人",
+        lines: ["……教えた？", "ごめん、覚えてない。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "古参",
+        lines: [
+          "え、先週くらいに。",
+          "リンクページに載せるって言ってたのに。",
+          "……まあいいけど。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "名無しさん",
+        lines: [
+          "前あった「お気に入りの曲」ってコーナー、どこ行った？",
+          "BUMP好きって書いてあったのに。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "管理人",
+        lines: ["……そんなの、あった？"]
+      },
       { show: window.Arg1.hasFrag("frag_archive"), name: "名無しさん", lines: ["ページ、消えてない？", "大丈夫？"] }
     ];
 
