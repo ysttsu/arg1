@@ -364,6 +364,9 @@
     saveState(state);
   }
 
+  // 離脱検知は全ページ共通で行う（index依存をなくす）
+  checkAbsence();
+
   // === 降るキラキラエフェクト ===
   const SPARKLE_CHARS = ['☆', '✧', '♡', '♪', '✦', '･ﾟ'];
   let sparkleInterval = null;

@@ -61,6 +61,19 @@
     let totalItems = 0;
     let completed = false; // 完了フラグ（連続発火防止）
 
+    const markSeen = (index, li) => {
+      if (completed) return;
+      hoveredSet.add(index);
+      li.classList.add("hovered");
+
+      // 全項目ホバー完了チェック
+      if (hoveredSet.size === totalItems) {
+        completed = true;
+        window.Arg1.grantFrag("frag_links");
+        showCompleteMessage();
+      }
+    };
+
     items.forEach((item, index) => {
       if (!item.show) return;
       totalItems++;
@@ -68,25 +81,11 @@
       li.className = "link-item";
       li.dataset.index = index;
 
-      // ホバー検知（フラグ未取得時のみ）
-      if (!window.Arg1.hasFrag("frag_links")) {
-        li.addEventListener("mouseenter", () => {
-          if (completed) return; // 完了後は何もしない
-          hoveredSet.add(index);
-          li.classList.add("hovered");
-
-          // 全項目ホバー完了チェック
-          if (hoveredSet.size === totalItems) {
-            completed = true;
-            window.Arg1.grantFrag("frag_links");
-            showCompleteMessage();
-          }
-        });
-      }
-
       const link = document.createElement("a");
       link.href = "#";
       link.textContent = item.label;
+      // 実リンクではないため、タップ時のページジャンプを防ぐ
+      link.addEventListener("click", (event) => event.preventDefault());
       li.appendChild(link);
       if (item.note) {
         const note = document.createElement("span");
@@ -94,6 +93,14 @@
         note.textContent = item.note;
         li.appendChild(note);
       }
+
+      // ホバー依存を避け、タッチ/キーボードでも進行可能にする
+      if (!window.Arg1.hasFrag("frag_links")) {
+        li.addEventListener("mouseenter", () => markSeen(index, li));
+        li.addEventListener("focusin", () => markSeen(index, li));
+        li.addEventListener("click", () => markSeen(index, li));
+      }
+
       list.appendChild(li);
     });
 

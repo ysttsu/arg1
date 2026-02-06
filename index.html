@@ -51,9 +51,6 @@
   <script src="./assets/common.js"></script>
   <script>
   (() => {
-    // 離脱検知（5分以上離脱でwasAbsent=true）
-    window.Arg1.checkAbsence();
-
     const visits = window.Arg1.addVisit();
     const visitEl = document.getElementById("visitCount");
     if (visitEl) visitEl.textContent = String(visits);
