@@ -29,7 +29,7 @@
     <p>古いメモ。</p>
     <p>残す用。</p>
 
-    <div class="block">
+    <div class="block" id="archiveBlock1">
       <div class="zprof-heading">メモ</div>
       <p>欠けても。</p>
       <p>残るのが先。</p>
@@ -37,6 +37,15 @@
       <p>たぶん。</p>
       <p>見てる人がいるなら。</p>
       <p>消したくない。</p>
+    </div>
+
+    <div class="block" id="archiveBlock2">
+      <div class="zprof-heading">覚え書き</div>
+      <p>ここは、残す場所。</p>
+      <p>他のページ、壊れても。</p>
+      <p>ここだけは。</p>
+      <p>形が変わっても。</p>
+      <p>意味が残れば。</p>
     </div>
 
     <div class="deco-hr">━━✧━━✧━━</div>
@@ -61,12 +70,21 @@
     }
 
     const visits = window.Arg1.addPageVisit("archive");
-    const block = document.querySelector(".block");
-    if (!block) return;
+    const block1 = document.getElementById("archiveBlock1");
+    const block2 = document.getElementById("archiveBlock2");
+
+    const addLines = (block, lines) => {
+      if (!block) return;
+      lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        block.appendChild(p);
+      });
+    };
 
     // frag_archive取得済み：追加コンテンツ
     if (window.Arg1.hasFrag("frag_archive")) {
-      const extra = [
+      addLines(block1, [
         "繋げる。",
         "ほどけない。",
         "手を、離さない。",
@@ -75,25 +93,25 @@
         "見ない方が良かったから。",
         "でも、残ってるかも。",
         "404の奥に。"
-      ];
-      extra.forEach((line) => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        block.appendChild(p);
-      });
+      ]);
+      addLines(block2, [
+        "前は、もっとあった。",
+        "素材置き場。お気に入りの曲。",
+        "日記も、もっと。",
+        "いつ消えた？",
+        "覚えてない。",
+        "覚えてないのが、怖い。"
+      ]);
     }
 
     // frag_yoru取得済み：最終コンテンツ
     if (window.Arg1.hasFrag("frag_yoru")) {
-      const last = [
+      addLines(block1, [
         "もう少し。",
-        "最後まで、残す。"
-      ];
-      last.forEach((line) => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        block.appendChild(p);
-      });
+        "最後まで、残す。",
+        "読んでくれた人へ。",
+        "ここに、いた。"
+      ]);
     }
   })();
   </script>

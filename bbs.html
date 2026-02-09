@@ -87,6 +87,38 @@
           "夜中に一人で見るの、しみる。"
         ]
       },
+      {
+        show: true,
+        name: "名無しさん",
+        lines: [
+          "素材かわいい☆",
+          "お借りしてもいいですか？"
+        ]
+      },
+      {
+        show: true,
+        name: "管理人",
+        lines: [
+          "どうぞ～。",
+          "直リンだけ勘弁。"
+        ]
+      },
+      {
+        show: true,
+        name: "巡回仲間",
+        lines: [
+          "リンク貼らせてもらいました！",
+          "事後報告ですみません。"
+        ]
+      },
+      {
+        show: true,
+        name: "管理人",
+        lines: [
+          "いいよ。",
+          "こっちも貼るね。巡回いく。"
+        ]
+      },
       { show: true, name: "名無しさん", lines: ["見てるよ。", "更新まだ？"] },
       { show: true, name: "管理人", lines: ["そのうち。", "気分。"] },
       // === 承：違和感 ===
@@ -108,6 +140,32 @@
       { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["このサイト、落ち着く。"] },
       {
         show: window.Arg1.hasFrag("frag_bbs"),
+        name: "夜更かしさん",
+        lines: [
+          "200踏みました～☆",
+          "また来ました。覚えてますか？"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "管理人",
+        lines: ["……いたんだ。", "うん、おめ。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "常連A",
+        lines: [
+          "BGMなくなった？",
+          "前はMIDI鳴ってたのに。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "管理人",
+        lines: ["BGM？", "……あったっけ。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
         name: "名無しさん",
         lines: [
           "前の日記ってどこ行きました？",
@@ -121,6 +179,14 @@
           "消した。",
           "……消えた？",
           "どっちだっけ。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_bbs"),
+        name: "名無しさん",
+        lines: [
+          "夜中3時の更新、いつもお疲れ。",
+          "同じ時間に見てる。"
         ]
       },
       { show: window.Arg1.hasFrag("frag_bbs"), name: "名無しさん", lines: ["アーカイブって、まだ？"] },
@@ -152,6 +218,27 @@
       },
       {
         show: window.Arg1.hasFrag("frag_archive"),
+        name: "夜更かしさん",
+        lines: [
+          "管理人さん、この前の返信の続き",
+          "聞きたかったんですけど。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "管理人",
+        lines: ["……返信？", "ごめん、どの。"]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "常連A",
+        lines: [
+          "トップの挨拶文、3回くらい変わってない？",
+          "前は「いらっしゃい」だったのに。"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
         name: "名無しさん",
         lines: [
           "前あった「お気に入りの曲」ってコーナー、どこ行った？",
@@ -163,7 +250,20 @@
         name: "管理人",
         lines: ["……そんなの、あった？"]
       },
-      { show: window.Arg1.hasFrag("frag_archive"), name: "名無しさん", lines: ["ページ、消えてない？", "大丈夫？"] }
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "名無しさん",
+        lines: [
+          "管理人さんの日記、前と内容違う気がする。",
+          "気のせい？"
+        ]
+      },
+      {
+        show: window.Arg1.hasFrag("frag_archive"),
+        name: "管理人",
+        lines: ["同じ。", "……たぶん。"]
+      },
+      { show: window.Arg1.hasFrag("frag_archive"), name: "名無しさん", lines: ["ページ、消えてない？", "大丈夫？ ちょっと心配。"] }
     ];
 
     const container = document.getElementById("bbsLogs");

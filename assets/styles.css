@@ -332,12 +332,12 @@ body.is-404 a{color:#8ab4f8}
 
 /* === ギミック：隠しエントリ === */
 .hidden-entry {
-  opacity: 0.12;
+  opacity: 0.18;
   cursor: default;
   transition: opacity 0.3s;
 }
 .hidden-entry:hover {
-  opacity: 0.35;
+  opacity: 0.4;
 }
 .hidden-entry.revealed {
   opacity: 1;
@@ -391,11 +391,13 @@ body.is-404 a{color:#8ab4f8}
 
 /* === ギミック：隠しリンク === */
 .hidden-link {
-  cursor: text;
+  cursor: default;
   color: rgba(74,0,37,0.4);
 }
 .hidden-link:hover {
+  cursor: pointer;
   color: rgba(74,0,37,0.7);
+  text-decoration: underline dashed;
 }
 
 /* === ギミック：隠しメモ（yoru.html） === */
